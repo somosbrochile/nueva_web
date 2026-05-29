@@ -11,122 +11,295 @@ const INSTAGRAM_TOKEN = ""; // 👈 pega tu token aquí
 /* ----------------------------------------------------------------
    INSTAGRAM FEED COMPONENT
 ---------------------------------------------------------------- */
-function InstagramFeed() {
-  const [posts, setPosts]     = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState(null);
+/* ----------------------------------------------------------------
+   ESFERA 3D — elemento decorativo para "Quiénes somos"
+   Técnica: CSS preserve-3d + 3 anillos orbitales animados.
+   Parallax en Y via scroll → JS lerp + rAF (sin librerías).
+---------------------------------------------------------------- */
+function OrbScene() {
+  const groupRef = useRef(null);
 
   useEffect(() => {
-    if (!INSTAGRAM_TOKEN) {
-      setLoading(false);
-      setError("no-token");
-      return;
-    }
-    const url = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp&limit=5&access_token=${INSTAGRAM_TOKEN}`;
-    fetch(url)
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) { setError("api-error"); }
-        else { setPosts(data.data || []); }
-        setLoading(false);
-      })
-      .catch(() => { setError("fetch-error"); setLoading(false); });
+    const group = groupRef.current;
+    if (!group) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let current = 0;
+    let raf;
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const tick = () => {
+      const target = window.scrollY * 0.15;    // factor de rotación por pixel
+      current = lerp(current, target, 0.05);   // suavidad del seguimiento
+      if (group) group.style.transform = `rotateY(${current}deg)`;
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => cancelAnimationFrame(raf);
   }, []);
 
-  const igUrl = "https://www.instagram.com/somos_bro/";
+  return (
+    <div className="orb-scene" aria-hidden="true">
+      <div className="orb-group" ref={groupRef}>
+        {/* Esfera central */}
+        <div className="orb">
+          <div className="orb-shine" />
+        </div>
+        {/* Anillos orbitales — distintos ejes y velocidades */}
+        <div className="orb-ring orb-ring-1" />
+        <div className="orb-ring orb-ring-2" />
+        <div className="orb-ring orb-ring-3" />
+      </div>
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------
+   ABOUT SECTION — con canvas de partículas tipo polvo lunar
+---------------------------------------------------------------- */
+const PARTICLE_COLORS = ["#e47204","#d00a5f","#206ea6","#f8ac08","#491c4b"];
+
+function AboutSection() {
+  const sectionRef = useRef(null);
+  const canvasRef  = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const canvas  = canvasRef.current;
+    if (!section || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let rafId;
+
+    /* --- tamaño del canvas sincronizado con la sección --- */
+    const resize = () => {
+      canvas.width  = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(section);
+
+    /* --- spawnea 3-5 partículas en la posición del mouse --- */
+    const spawn = (x, y) => {
+      const n = 3 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < n; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 0.6 + Math.random() * 1.8;
+        particles.push({
+          x, y,
+          vx:    Math.cos(angle) * speed,
+          vy:    Math.sin(angle) * speed - 0.8,  // impulso hacia arriba
+          size:  1.5 + Math.random() * 2.5,       // 1.5 – 4px
+          color: PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)],
+          alpha: 0.75 + Math.random() * 0.25,
+          decay: 0.016 + Math.random() * 0.024,   // fade variable
+        });
+      }
+    };
+
+    const onMove = (e) => {
+      const r = section.getBoundingClientRect();
+      spawn(e.clientX - r.left, e.clientY - r.top);
+    };
+    section.addEventListener("mousemove", onMove);
+
+    /* --- loop de animación --- */
+    const tick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles = particles.filter(p => p.alpha > 0);
+
+      for (const p of particles) {
+        p.x     += p.vx;
+        p.y     += p.vy;
+        p.vy    += 0.045;   // gravedad
+        p.vx    *= 0.97;    // rozamiento aire
+        p.alpha -= p.decay;
+
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle   = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, Math.max(0.5, p.size / 2), 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      rafId = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => {
+      section.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(rafId);
+      ro.disconnect();
+    };
+  }, []);
 
   return (
-    <section id="instagram">
-      <div className="container">
-        <div className="ig-head">
+    <section ref={sectionRef} style={{position:"relative"}}>
+      {/* Canvas overlay — pointer-events:none para no bloquear clicks */}
+      <canvas ref={canvasRef} className="about-particles-canvas" />
+      <div className="container" style={{position:"relative", zIndex:1}}>
+        <div className="about-split">
+          {/* Texto — izquierda */}
           <div>
-            <FadeUp><span className="eyebrow">Instagram</span></FadeUp>
+            <FadeUp><span className="eyebrow">Quiénes somos</span></FadeUp>
+            <FadeUp delay={0.05}><h2 style={{marginTop:16}}>Agencia creativa <span className="grad-text">con foco en resultados.</span></h2></FadeUp>
+            <FadeUp delay={0.1}>
+              <p style={{fontSize:18,marginTop:24,lineHeight:1.65,maxWidth:"50ch"}}>
+                Somos una agencia creativa con base en Santiago, Chile. Trabajamos con empresas y marcas que quieren comunicar mejor — con contenido que genera autoridad, identidades que se recuerdan y sitios web que convierten. Sin rodeos, sin relleno. Solo trabajo bien hecho.
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.15}>
+              <div style={{marginTop:32}}>
+                <Magnetic><a className="btn btn-ghost" href="about.html">Conocer más<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
+              </div>
+            </FadeUp>
+          </div>
+          {/* Esfera 3D — derecha */}
+          <FadeUp delay={0.2}>
+            <OrbScene />
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------------------------------------------
+   GALERÍA MASONRY — "Nuestro trabajo"
+---------------------------------------------------------------- */
+const GALERIA = [
+  { src: "assets/galeria/Doctor-claudio-rojas-ginecologo-antofagasta.jpg",          client: "Dr. Claudio Rojas" },
+  { src: "assets/galeria/chris-bannister-tio-wom.jpg",                              client: "Chris Bannister · WOM" },
+  { src: "assets/galeria/aerocopter-servicios-helicoptero-chile.jpg",               client: "Aerocopter" },
+  { src: "assets/galeria/Modelo-sesion-fotos-somos-bro.jpg",                        client: "Sesión Somos Bro" },
+  { src: "assets/galeria/Parafernalia-joyas-anillos-plata-artesanales.jpg",         client: "Parafernalia Joyas" },
+  { src: "assets/galeria/maquiyogui.paula.albornoz-creacion-contenido-santiago.jpg",client: "Paula Albornoz · Maquiyogui" },
+];
+
+function GaleriaSection() {
+  return (
+    <section id="galeria">
+      <div className="container">
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:56,gap:24,flexWrap:"wrap"}}>
+          <div>
+            <FadeUp><span className="eyebrow">Nuestro trabajo</span></FadeUp>
+            <FadeUp delay={0.05}><h2 style={{marginTop:16}}>Detrás de <span className="grad-text">cámara.</span></h2></FadeUp>
+          </div>
+          <FadeUp delay={0.1}>
+            <p style={{maxWidth:"38ch",color:"var(--ink-2)",fontSize:17}}>Una selección de producciones, marcas y momentos reales.</p>
+          </FadeUp>
+        </div>
+        <div className="galeria-grid">
+          {GALERIA.map((item, i) => (
+            <FadeUp key={item.src} delay={i * 0.07} className="galeria-item-wrap">
+              <div className="galeria-item">
+                <img
+                  src={item.src}
+                  alt={item.client}
+                  loading="lazy"
+                  className="galeria-img"
+                />
+                <div className="galeria-overlay">
+                  <span className="galeria-client">{item.client}</span>
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const SOCIAL_NETWORKS = [
+  {
+    name: "Instagram",
+    handle: "@somos_bro",
+    url: "https://www.instagram.com/somos_bro/",
+    color: "#E1306C",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+      </svg>
+    ),
+  },
+  {
+    name: "TikTok",
+    handle: "@somos.bro",
+    url: "https://www.tiktok.com/@somos.bro",
+    color: "#ffffff",
+    borderColor: "rgba(255,255,255,0.5)",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.16 8.16 0 004.77 1.52V6.82a4.85 4.85 0 01-1-.13z"/>
+      </svg>
+    ),
+  },
+  {
+    name: "YouTube",
+    handle: "@somosbro",
+    url: "https://www.youtube.com/@somosbro",
+    color: "#FF0000",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23.5 6.19a3.02 3.02 0 00-2.13-2.14C19.51 3.6 12 3.6 12 3.6s-7.51 0-9.37.47A3.02 3.02 0 00.5 6.19 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.81 3.02 3.02 0 002.13 2.14C4.49 20.4 12 20.4 12 20.4s7.51 0 9.37-.47a3.02 3.02 0 002.13-2.14A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.81zM9.75 15.52V8.48L15.5 12l-5.75 3.52z"/>
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    handle: "Somos Bro",
+    url: "https://www.linkedin.com/company/somos-bro",
+    color: "#0077B5",
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.35-1.85 3.59 0 4.25 2.36 4.25 5.43v6.31zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/>
+      </svg>
+    ),
+  },
+];
+
+function SocialSection() {
+  return (
+    <section id="redes">
+      <div className="container">
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:56,gap:24,flexWrap:"wrap"}}>
+          <div>
+            <FadeUp><span className="eyebrow">Redes sociales</span></FadeUp>
             <FadeUp delay={0.05}>
-              <h2 style={{marginTop:16}}>
-                Lo último en{" "}
-                <a href={igUrl} target="_blank" rel="noreferrer" className="grad-text" style={{textDecoration:"none"}}>
-                  @somos_bro
-                </a>
+              <h2 style={{marginTop:16,maxWidth:"20ch"}}>
+                Síguenos y ve el trabajo <span className="grad-text">en tiempo real.</span>
               </h2>
             </FadeUp>
           </div>
-          <FadeUp delay={0.1}>
-            <Magnetic>
-              <a className="btn btn-ghost" href={igUrl} target="_blank" rel="noreferrer">
-                Seguir en Instagram
-                <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
-              </a>
-            </Magnetic>
-          </FadeUp>
         </div>
-
-        {/* ESTADO: cargando */}
-        {loading && (
-          <div className="ig-grid">
-            {[1,2,3,4,5].map(i => (
-              <div key={i} className="ig-card ig-skeleton" />
-            ))}
-          </div>
-        )}
-
-        {/* ESTADO: sin token configurado */}
-        {!loading && error === "no-token" && (
-          <FadeUp>
-            <div className="ig-no-token glass">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--magenta)" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="var(--magenta)" stroke="none"/></svg>
-              <div>
-                <div style={{fontFamily:"var(--font-h)",fontWeight:700,fontSize:18,marginBottom:8}}>Conecta tu cuenta de Instagram</div>
-                <div style={{color:"var(--ink-2)",fontSize:14,maxWidth:"52ch"}}>
-                  Para mostrar tus posts reales, agrega tu token en <code style={{background:"rgba(255,255,255,.08)",padding:"2px 8px",borderRadius:6,fontSize:13}}>home.jsx</code> → constante <code style={{background:"rgba(255,255,255,.08)",padding:"2px 8px",borderRadius:6,fontSize:13}}>INSTAGRAM_TOKEN</code>.<br/>
-                  Ver instrucciones en <strong>INSTAGRAM_SETUP.md</strong>.
+        <div className="social-grid">
+          {SOCIAL_NETWORKS.map((net, i) => (
+            <FadeUp key={net.name} delay={0.06 + i * 0.07}>
+              <a
+                href={net.url}
+                target="_blank"
+                rel="noreferrer"
+                className="social-card"
+                style={{"--social-color": net.color, "--social-border": net.borderColor || net.color + "44"}}
+              >
+                <div className="social-card-icon">{net.icon}</div>
+                <div className="social-card-body">
+                  <div className="social-card-name">{net.name}</div>
+                  <div className="social-card-handle">{net.handle}</div>
                 </div>
-              </div>
-              <a className="btn btn-primary" href={igUrl} target="_blank" rel="noreferrer" style={{flexShrink:0}}>
-                Ver perfil ↗
+                <svg className="social-card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17 17 7M9 7h8v8"/></svg>
               </a>
-            </div>
-          </FadeUp>
-        )}
-
-        {/* ESTADO: error de API */}
-        {!loading && (error === "api-error" || error === "fetch-error") && (
-          <FadeUp>
-            <div className="ig-no-token glass">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-              <div>
-                <div style={{fontFamily:"var(--font-h)",fontWeight:700,fontSize:18,marginBottom:8}}>No se pudo cargar Instagram</div>
-                <div style={{color:"var(--ink-2)",fontSize:14}}>Token vencido o inválido. Genera uno nuevo siguiendo las instrucciones en <strong>INSTAGRAM_SETUP.md</strong>.</div>
-              </div>
-              <a className="btn btn-ghost" href={igUrl} target="_blank" rel="noreferrer" style={{flexShrink:0}}>Ver perfil ↗</a>
-            </div>
-          </FadeUp>
-        )}
-
-        {/* ESTADO: posts cargados */}
-        {!loading && !error && posts.length > 0 && (
-          <FadeUp delay={0.1}>
-            <div className="ig-grid">
-              {posts.map((post, i) => {
-                const imgSrc = post.media_type === "VIDEO" ? post.thumbnail_url : post.media_url;
-                const caption = post.caption ? post.caption.slice(0, 90) + (post.caption.length > 90 ? "…" : "") : "";
-                return (
-                  <a key={post.id} href={post.permalink} target="_blank" rel="noreferrer" className="ig-card" style={{animationDelay: i * 0.06 + "s"}}>
-                    <img src={imgSrc} alt={caption || "Post de @somos_bro"} loading="lazy" />
-                    <div className="ig-overlay">
-                      {post.media_type === "VIDEO" && (
-                        <div className="ig-play">
-                          <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
-                      )}
-                      {caption && <p className="ig-caption">{caption}</p>}
-                      <span className="ig-link">Ver en Instagram ↗</span>
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          </FadeUp>
-        )}
+            </FadeUp>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -141,21 +314,120 @@ const SERVICES = [
 ];
 
 const PORTFOLIO = [
-  { brand: "Café Norte", tag: "Branding · Web", color: "linear-gradient(135deg,#491c4b 0%,#d00a5f 100%)", initial: "CN" },
-  { brand: "Estudio Lina", tag: "Audiovisual", color: "linear-gradient(135deg,#206ea6 0%,#491c4b 100%)", initial: "EL" },
-  { brand: "Mantra Yoga", tag: "Social Media", color: "linear-gradient(135deg,#e47204 0%,#d00a5f 100%)", initial: "MY" },
-  { brand: "Vinos del Sur", tag: "Branding", color: "linear-gradient(135deg,#2d1230 0%,#206ea6 100%)", initial: "VS" },
-  { brand: "Forma Living", tag: "Web · Content", color: "linear-gradient(135deg,#d00a5f 0%,#f8ac08 100%)", initial: "FL" },
-  { brand: "Ruta Patagonia", tag: "Audiovisual", color: "linear-gradient(135deg,#206ea6 0%,#58bba0 100%)", initial: "RP" },
+  { brand: "Carolyn San Martín", tag: "Diseño web", img: "assets/portfolio/Carolyn-san-martin-abogada-penalista-sitio-web.png" },
+  { brand: "Doctek", tag: "Diseño web", img: "assets/portfolio/sitio-web-doctek-ingenieria-antofagasta.png" },
+  { brand: "Pamela Olivares", tag: "Diseño web · Marca personal", img: "assets/portfolio/pamela-olivares-abogada-familia-santiago.png" },
 ];
 
-function HorizontalPortfolio() {
-  const wrap = useRef(null);
-  const track = useRef(null);
-  const { scrollYProgress } = useScroll({ target: wrap, offset: ["start end", "end start"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-46%"]);
+/* ----------------------------------------------------------------
+   HERO KINETIC — floating words + mouse parallax
+   Technique: CSS `translate` (independent of `transform`) handles
+   parallax; `transform` stays free for CSS keyframe float/rotate.
+   They stack per CSS Transforms Level 2 — zero conflict.
+---------------------------------------------------------------- */
+function HeroKinetic() {
+  const containerRef = useRef(null);
+
+  // [text, top, left, fontSize, color, animClass, dur(s), negDelay(s), speed, opacity]
+  // speed: distance from hero center → farther = higher value (0.02–0.08)
+  // opacity: 0.25–0.35 for real visual presence
+  // Solo 5 palabras visibles en el viewport; el resto posicionadas fuera
+  const WORDS = [
+    ["Contenido",      "8%",   "4%",    "clamp(14px,1.7vw,25px)", "#ffffff", "hk-a", 14, 0,   0.072, 0.09],
+    ["Branding",       "6%",   "60%",   "clamp(11px,1.4vw,20px)", "#ffffff", "hk-b", 11, 1.5, 0.065, 0.08],
+    ["Web",            "34%",  "88%",   "clamp(21px,2.7vw,36px)", "#ffffff", "hk-c", 17, 0.8, 0.068, 0.10],
+    ["Logos",          "130%", "7%",    "clamp(13px,1.5vw,22px)", "#ffffff", "hk-d", 12, 2.2, 0.063, 0.09],
+    ["Reels",          "18%",  "48%",   "clamp(9px,1.1vw,15px)",  "#ffffff", "hk-e", 9,  3.1, 0.028, 0.08],
+    ["Estrategia",     "50%",  "-15%",  "clamp(11px,1.3vw,18px)", "#ffffff", "hk-f", 15, 0.3, 0.058, 0.10],
+    ["Identidad",      "78%",  "62%",   "clamp(13px,1.6vw,24px)", "#ffffff", "hk-b", 13, 1.8, 0.055, 0.09],
+    ["Marca personal", "110%", "70%",   "clamp(9px,1vw,14px)",    "#ffffff", "hk-c", 10, 4.0, 0.038, 0.08],
+    ["SEO",            "4%",   "105%",  "clamp(18px,2.2vw,32px)", "#ffffff", "hk-d", 18, 0.6, 0.075, 0.10],
+    ["Copy",           "84%",  "42%",   "clamp(15px,2vw,28px)",   "#ffffff", "hk-e", 11, 2.7, 0.048, 0.09],
+    ["Video",          "120%", "52%",   "clamp(10px,1.2vw,17px)", "#ffffff", "hk-f", 14, 1.1, 0.022, 0.08],
+    ["Social",         "24%",  "110%",  "clamp(12px,1.4vw,20px)", "#ffffff", "hk-a", 16, 3.5, 0.060, 0.09],
+  ];
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // Respect reduced-motion preference
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const hero    = container.closest(".hero");
+    const spans   = Array.from(container.querySelectorAll(".hk-word"));
+    const speeds  = spans.map(el => parseFloat(el.dataset.speed) || 0.04);
+
+    // Per-word lerp state
+    const cur = spans.map(() => ({ x: 0, y: 0 }));
+    const tgt = spans.map(() => ({ x: 0, y: 0 }));
+
+    const onMove = (e) => {
+      if (!hero) return;
+      const r  = hero.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width  / 2);
+      const dy = e.clientY - (r.top  + r.height / 2);
+      spans.forEach((_, i) => {
+        tgt[i].x = dx * speeds[i];
+        tgt[i].y = dy * speeds[i];
+      });
+    };
+
+    // Restore on mouse leave
+    const onLeave = () => {
+      spans.forEach((_, i) => { tgt[i].x = 0; tgt[i].y = 0; });
+    };
+
+    (hero || window).addEventListener("mousemove", onMove);
+    (hero || window).addEventListener("mouseleave", onLeave);
+
+    let raf;
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const SMOOTH = 0.075; // lerp coefficient — ~13 frames to 60% target
+
+    const tick = () => {
+      spans.forEach((el, i) => {
+        cur[i].x = lerp(cur[i].x, tgt[i].x, SMOOTH);
+        cur[i].y = lerp(cur[i].y, tgt[i].y, SMOOTH);
+        // `translate` property is separate from `transform` in CSS Transforms L2
+        // → stacks on top of keyframe animations without overriding them
+        el.style.translate = `${cur[i].x.toFixed(2)}px ${cur[i].y.toFixed(2)}px`;
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      (hero || window).removeEventListener("mousemove", onMove);
+      (hero || window).removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
   return (
-    <section className="portfolio" ref={wrap}>
+    <div className="hero-kinetic" ref={containerRef} aria-hidden="true">
+      {WORDS.map(([text, top, left, fontSize, color, animClass, dur, delay, speed, opacity]) => (
+        <span
+          key={text}
+          className={"hk-word " + animClass}
+          data-speed={speed}
+          style={{
+            top, left, fontSize, color, opacity,
+            animationDuration: dur + "s",
+            animationDelay: "-" + delay + "s",
+            textShadow: `0 0 22px ${color}70, 0 0 44px ${color}30`,
+          }}
+        >
+          {text}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function GridPortfolio() {
+  return (
+    <section className="portfolio">
       <div className="container">
         <div className="portfolio-head">
           <div>
@@ -166,22 +438,142 @@ function HorizontalPortfolio() {
             <Magnetic><a className="btn btn-ghost" href="portfolio.html">Ver todo<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
           </FadeUp>
         </div>
-      </div>
-      <div className="portfolio-track-wrap" data-drag>
-        <motion.div className="portfolio-track" ref={track} style={{ x }}>
+        <div className="portfolio-grid">
           {PORTFOLIO.map((p, i) => (
-            <a key={i} href="portfolio.html" className="portfolio-card" style={{ background: p.color }}>
-              <div className="ph">{p.initial}</div>
-              <div className="meta">
-                <div>
-                  <div className="tag">{p.tag}</div>
-                  <h4 style={{marginTop:6}}>{p.brand}</h4>
+            <FadeUp key={i} delay={0.08 + i * 0.07} className="portfolio-card-wrap">
+              <a href="portfolio.html" className="portfolio-card" style={{"--scroll-dur":"8s"}}>
+                <div className="portfolio-card-thumb">
+                  <img src={p.img} alt={p.brand} loading="lazy" className="portfolio-card-scroll-img" />
                 </div>
-                <span className="pill">2025 ↗</span>
-              </div>
-            </a>
+                <div className="portfolio-card-overlay">
+                  <div className="portfolio-card-overlay-inner">
+                    <div className="tag" style={{marginBottom:12}}>{p.tag}</div>
+                    <h3 className="portfolio-card-title">{p.brand}</h3>
+                    <span className="portfolio-card-cta">Ver proyecto<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{marginLeft:8}}><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+                  </div>
+                </div>
+              </a>
+            </FadeUp>
           ))}
-        </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Stat: contador animado vanilla ──────────────────────────── */
+function CountStat({ to, suffix = "", label }) {
+  const ref = useRef(null);
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let started = false, raf, t0 = 0;
+    const DURATION = 1800;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started) {
+        started = true;
+        const tick = (now) => {
+          if (!t0) t0 = now;
+          const p = Math.min((now - t0) / DURATION, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          setVal(Math.round(to * eased));
+          if (p < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.4 });
+    obs.observe(el);
+    return () => { obs.disconnect(); cancelAnimationFrame(raf); };
+  }, [to]);
+  return (
+    <div className="stat" ref={ref}>
+      <span className="stat-num">{val}<span className="suf">{suffix}</span></span>
+      <div className="stat-label">{label}</div>
+    </div>
+  );
+}
+
+/* ── Stat: carousel con fade ──────────────────────────────────── */
+function CarouselStat({ items, label }) {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const timerRef = useRef(null);
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx(i => (i + 1) % items.length);
+        setVisible(true);
+      }, 300);
+    }, 2000);
+    return () => clearInterval(timerRef.current);
+  }, [items.length]);
+  return (
+    <div className="stat">
+      <span className="stat-num stat-carousel" style={{ opacity: visible ? 1 : 0, transition: "opacity 0.3s ease" }}>
+        {items[idx]}
+      </span>
+      <div className="stat-label">{label}</div>
+    </div>
+  );
+}
+
+/* ── Stat: typewriter vanilla ─────────────────────────────────── */
+function TypewriterStat({ words, label }) {
+  const [text, setText] = useState("");
+  const stateRef = useRef({ wordIdx: 0, charIdx: 0, deleting: false });
+  useEffect(() => {
+    let timeout;
+    const WRITE_SPEED = 90, DELETE_SPEED = 55, PAUSE = 1400;
+    const tick = () => {
+      const s = stateRef.current;
+      const word = words[s.wordIdx];
+      if (!s.deleting) {
+        setText(word.slice(0, s.charIdx + 1));
+        s.charIdx++;
+        if (s.charIdx === word.length) {
+          s.deleting = true;
+          timeout = setTimeout(tick, PAUSE);
+          return;
+        }
+        timeout = setTimeout(tick, WRITE_SPEED);
+      } else {
+        setText(word.slice(0, s.charIdx - 1));
+        s.charIdx--;
+        if (s.charIdx === 0) {
+          s.deleting = false;
+          s.wordIdx = (s.wordIdx + 1) % words.length;
+        }
+        timeout = setTimeout(tick, DELETE_SPEED);
+      }
+    };
+    timeout = setTimeout(tick, 600);
+    return () => clearTimeout(timeout);
+  }, []);
+  return (
+    <div className="stat">
+      <span className="stat-num stat-typewriter">
+        {text}<span className="tw-cursor">|</span>
+      </span>
+      <div className="stat-label">{label}</div>
+    </div>
+  );
+}
+
+/* ── Sección stats completa ───────────────────────────────────── */
+function StatsSection() {
+  return (
+    <section style={{paddingTop:0,paddingBottom:80}}>
+      <div className="container">
+        <FadeUp>
+          <div className="stats-grid">
+            <CountStat to={2018} label="Trabajando contigo" />
+            <CountStat to={6} suffix="M+" label="Views generadas" />
+            <CarouselStat items={["Salud","Legal","Finanzas","Lifestyle","Educación"]} label="Industrias" />
+            <TypewriterStat words={["Santiago","Chile","LATAM"]} label="Dónde operamos" />
+          </div>
+        </FadeUp>
       </div>
     </section>
   );
@@ -197,6 +589,7 @@ function Home() {
         <div className="hero-bg-blob a" />
         <div className="hero-bg-blob b" />
         <div className="hero-bg-blob c" />
+        <HeroKinetic />
         <div className="container" style={{position:"relative",zIndex:1,width:"100%"}}>
           <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:.7,delay:.1}} className="hero-eyebrow">
             <span className="eyebrow">Agencia creativa · Santiago, CL</span>
@@ -241,10 +634,10 @@ function Home() {
 
       {/* MARQUEE */}
       <Marquee items={[
-        { text: "Contenido que se ve", dot: "" },
-        { text: "Branding con vibra", dot: "b" },
-        { text: "Sitios que venden", dot: "c" },
-        { text: "Real talk, real results", dot: "d" },
+        { text: "La gente agenda con quien conoce.", dot: "" },
+        { text: "Tu cara vale más que tu logo.", dot: "b" },
+        { text: "De invisible a inevitable.", dot: "c" },
+        { text: "Contenido que conecta, marcas que crecen.", dot: "d" },
       ]} />
 
       {/* SERVICES */}
@@ -279,43 +672,17 @@ function Home() {
         </div>
       </section>
 
-      <HorizontalPortfolio />
+      <GridPortfolio />
 
       {/* STATS */}
-      <section style={{paddingTop:0,paddingBottom:80}}>
-        <div className="container">
-          <FadeUp>
-            <div className="stats-grid">
-              <div className="stat"><StatNumber to={120} suffix="+" /><div className="stat-label">Proyectos entregados</div></div>
-              <div className="stat"><StatNumber to={48} /><div className="stat-label">Marcas activas</div></div>
-              <div className="stat"><StatNumber to={6} suffix="M+" /><div className="stat-label">Views generadas</div></div>
-              <div className="stat"><StatNumber to={2018} /><div className="stat-label">Año uno</div></div>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
+      <StatsSection />
 
-      {/* ABOUT TEASER */}
-      <section>
-        <div className="container">
-          <div style={{maxWidth:"72ch"}}>
-            <FadeUp><span className="eyebrow">Quiénes somos</span></FadeUp>
-            <FadeUp delay={0.05}><h2 style={{marginTop:16}}>Agencia creativa <span className="grad-text">con foco en resultados.</span></h2></FadeUp>
-            <FadeUp delay={0.1}>
-              <p style={{fontSize:18,marginTop:24,lineHeight:1.65}}>
-                Somos una agencia creativa con base en Santiago, Chile. Trabajamos con empresas y marcas que quieren comunicar mejor — con contenido que genera autoridad, identidades que se recuerdan y sitios web que convierten. Sin rodeos, sin relleno. Solo trabajo bien hecho.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.15}>
-              <div style={{marginTop:32}}>
-                <Magnetic><a className="btn btn-ghost" href="about.html">Conocer más<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
-              </div>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
+      {/* ABOUT TEASER — con esfera 3D y partículas */}
+      <AboutSection />
 
-      <InstagramFeed />
+      <GaleriaSection />
+
+      <SocialSection />
 
       {/* CONTACT TEASER */}
       <section>
@@ -330,12 +697,11 @@ function Home() {
               <FadeUp delay={0.15}>
                 <div style={{marginTop:32,display:"flex",flexDirection:"column",gap:16,alignItems:"flex-start"}}>
                   <Magnetic strength={0.25}>
-                    <a className="wa-btn" href="https://wa.me/56900000000" target="_blank" rel="noreferrer">
-                      <svg className="wa-icon" viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3 9 3 16c0 2.4.7 4.7 2 6.7L3 29l6.5-2C11.4 28 13.7 28.7 16 28.7c7 0 13-6 13-13S23 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.8-1.7l-.4-.2-3.9 1.2 1.2-3.8-.3-.4C5.5 19.8 5 17.9 5 16c0-6 5-11 11-11s11 5 11 11-5 11-11 11zm6-8.2c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.8.2s-.9 1.1-1.1 1.3c-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.7.1-.1.3-.4.4-.6.1-.2.2-.3.3-.5.1-.2.1-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7-.1-.2-.3-.3-.6-.5z"/></svg>
-                      Hablar por WhatsApp
+                    <a className="btn btn-primary" href="mailto:contacto@somosbro.cl">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{marginRight:8}}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                      contacto@somosbro.cl
                     </a>
                   </Magnetic>
-                  <a href="mailto:contacto@somosbro.cl" style={{fontSize:18,color:"var(--ink-2)"}}>contacto@somosbro.cl ↗</a>
                 </div>
               </FadeUp>
             </div>

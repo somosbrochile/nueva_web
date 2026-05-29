@@ -1,5 +1,58 @@
 /* global React, ReactDOM, Nav, Footer, CustomCursor, Magnetic, FadeUp, RevealHeadline, PageTransition */
 
+/* ── Claqueta de cine — ilustración CSS pura ─────────────────── */
+function Clapperboard() {
+  return (
+    <div className="clap-outer" aria-hidden="true">
+      <div className="clap-inner">
+        <div className="clap">
+
+          {/* Brazo superior — pieza que golpea */}
+          <div className="clap-arm">
+            <div className="clap-arm-hinge" />
+          </div>
+
+          {/* Cuerpo principal */}
+          <div className="clap-body">
+
+            {/* Banda de rayas diagonales en el tope del cuerpo */}
+            <div className="clap-body-stripe" />
+
+            {/* Área de información */}
+            <div className="clap-info">
+              <div className="clap-row">
+                <span className="clap-label">PROD.</span>
+                <span className="clap-val">SOMOS BRO</span>
+              </div>
+              <div className="clap-divider" />
+              <div className="clap-row">
+                <span className="clap-label">DIR.</span>
+                <span className="clap-val">SANTIAGO, CL</span>
+              </div>
+              <div className="clap-divider" />
+              <div className="clap-bottom">
+                <div className="clap-cell">
+                  <span className="clap-label">SCENE</span>
+                  <span className="clap-val">01</span>
+                </div>
+                <div className="clap-cell">
+                  <span className="clap-label">TAKE</span>
+                  <span className="clap-val">∞</span>
+                </div>
+                <div className="clap-cell">
+                  <span className="clap-label">ROLL</span>
+                  <span className="clap-val">2025</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const SERVICES = [
   { num: "01", id: "contenido", title: "Creación de contenido para empresas",
     desc: "Producimos contenido estratégico para que tu empresa comunique con claridad, consistencia y autoridad en todos sus canales digitales.",
@@ -15,7 +68,7 @@ const SERVICES = [
     deliverables: ["Investigación y conceptualización", "Sistema de identidad visual", "Manual de marca", "Aplicaciones y piezas gráficas"] },
   { num: "05", id: "logos", title: "Creación de logos",
     desc: "Diseñamos el símbolo que va a representar tu marca. Proceso claro, propuestas reales y entrega de archivos listos para usar en cualquier soporte.",
-    deliverables: ["Briefing y referencias", "3 propuestas de concepto", "Refinamiento y ajustes", "Entrega en todos los formatos (SVG, PNG, PDF)"] },
+    deliverables: ["Una identidad visual que genera confianza antes de que hablen contigo", "Tu marca reconocible en Instagram, tu tarjeta y tu letrero", "Deja de parecer improvisado — proyecta profesionalismo desde el logo", "Archivos listos para usar en todos los formatos y soportes"] },
 ];
 
 function Services() {
@@ -25,13 +78,22 @@ function Services() {
       <header className="page-head">
         <div className="blob" style={{background:"radial-gradient(circle,#d00a5f,transparent 70%)"}} />
         <div className="container">
-          <FadeUp><span className="eyebrow">Servicios</span></FadeUp>
-          <FadeUp delay={0.05}><h1 style={{marginTop:24,maxWidth:"14ch"}}>Cinco especialidades. <span className="grad-text">Un equipo.</span></h1></FadeUp>
-          <FadeUp delay={0.12}>
-            <p style={{maxWidth:"60ch",fontSize:20,marginTop:32,color:"var(--ink-2)"}}>
-              Trabajamos en paquete o por servicio. Si tu marca necesita estrategia, contenido y sitio web, lo hacemos todo bajo un solo brief — sin pasarte de proveedor en proveedor.
-            </p>
-          </FadeUp>
+          <div className="services-head-split">
+            {/* Texto izquierda */}
+            <div>
+              <FadeUp><span className="eyebrow">Servicios</span></FadeUp>
+              <FadeUp delay={0.05}><h1 style={{marginTop:24,maxWidth:"14ch"}}>Cinco especialidades. <span className="grad-text">Un equipo.</span></h1></FadeUp>
+              <FadeUp delay={0.12}>
+                <p style={{maxWidth:"52ch",fontSize:20,marginTop:32,color:"var(--ink-2)"}}>
+                  Trabajamos en paquete o por servicio. Si tu marca necesita estrategia, contenido y sitio web, lo hacemos todo bajo un solo brief — sin pasarte de proveedor en proveedor.
+                </p>
+              </FadeUp>
+            </div>
+            {/* Claqueta CSS derecha */}
+            <FadeUp delay={0.2}>
+              <Clapperboard />
+            </FadeUp>
+          </div>
         </div>
       </header>
 

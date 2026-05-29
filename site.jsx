@@ -242,27 +242,28 @@ function Footer() {
             </div>
             <div className="row" style={{marginTop:32}}>
               <Magnetic><a className="btn btn-primary" href="contact.html">Empezar un proyecto<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
-              <Magnetic><a className="btn btn-ghost" href="https://wa.me/56900000000" target="_blank" rel="noreferrer">WhatsApp</a></Magnetic>
+              <Magnetic><a className="btn btn-ghost" href="mailto:contacto@somosbro.cl">Escribir un correo</a></Magnetic>
             </div>
           </FadeUp>
           <div className="footer-cols">
             <div className="footer-col"><h5>Estudio</h5>
               <a href="about.html">Nosotros</a>
-              <a href="services.html">Services</a>
+              <a href="services.html">Servicios</a>
               <a href="portfolio.html">Portfolio</a>
-              <a href="contact.html">Contact</a>
+              <a href="contact.html">Contacto</a>
             </div>
             <div className="footer-col"><h5>Servicios</h5>
-              <a href="services.html#content">Contenido</a>
-              <a href="services.html#audiovisual">Audiovisual</a>
-              <a href="services.html#social">Social Media</a>
-              <a href="services.html#web">Web Design</a>
+              <a href="services.html">Creación de contenido</a>
+              <a href="services.html">Marca personal</a>
+              <a href="services.html">Diseño web</a>
+              <a href="services.html">Branding</a>
+              <a href="services.html">Logos</a>
             </div>
             <div className="footer-col"><h5>Síguenos</h5>
               <a href="https://www.instagram.com/somos_bro/" target="_blank" rel="noreferrer">Instagram ↗</a>
-              <a href="#">TikTok ↗</a>
-              <a href="#">LinkedIn ↗</a>
-              <a href="#">Behance ↗</a>
+              <a href="https://www.tiktok.com/@somos.bro" target="_blank" rel="noreferrer">TikTok ↗</a>
+              <a href="https://www.linkedin.com/company/somos-bro" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+              <a href="https://www.youtube.com/@somosbro" target="_blank" rel="noreferrer">YouTube ↗</a>
             </div>
           </div>
         </div>
