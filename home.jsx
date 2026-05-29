@@ -1,6 +1,8 @@
-/* global React, ReactDOM, framerMotion, Nav, Footer, CustomCursor, Magnetic, FadeUp, RevealHeadline, StatNumber, Marquee, PageTransition */
-const { useEffect, useRef, useState } = React;
-const { motion, useScroll, useTransform } = window.framerMotion;
+import React, { useEffect, useRef, useState } from 'react'
+import ReactDOM from 'react-dom/client'
+import { motion } from 'framer-motion'
+import { CustomCursor, Magnetic, FadeUp, RevealHeadline, StatNumber, Nav, Footer, PageTransition, Marquee } from './site.jsx'
+import './styles.css'
 
 /* ----------------------------------------------------------------
    INSTAGRAM — pega aquí tu token de acceso
@@ -8,9 +10,6 @@ const { motion, useScroll, useTransform } = window.framerMotion;
 ---------------------------------------------------------------- */
 const INSTAGRAM_TOKEN = ""; // 👈 pega tu token aquí
 
-/* ----------------------------------------------------------------
-   INSTAGRAM FEED COMPONENT
----------------------------------------------------------------- */
 /* ----------------------------------------------------------------
    ESFERA 3D — elemento decorativo para "Quiénes somos"
    Técnica: CSS preserve-3d + 3 anillos orbitales animados.
@@ -321,17 +320,10 @@ const PORTFOLIO = [
 
 /* ----------------------------------------------------------------
    HERO KINETIC — floating words + mouse parallax
-   Technique: CSS `translate` (independent of `transform`) handles
-   parallax; `transform` stays free for CSS keyframe float/rotate.
-   They stack per CSS Transforms Level 2 — zero conflict.
 ---------------------------------------------------------------- */
 function HeroKinetic() {
   const containerRef = useRef(null);
 
-  // [text, top, left, fontSize, color, animClass, dur(s), negDelay(s), speed, opacity]
-  // speed: distance from hero center → farther = higher value (0.02–0.08)
-  // opacity: 0.25–0.35 for real visual presence
-  // Solo 5 palabras visibles en el viewport; el resto posicionadas fuera
   const WORDS = [
     ["Contenido",      "8%",   "4%",    "clamp(14px,1.7vw,25px)", "#ffffff", "hk-a", 14, 0,   0.072, 0.09],
     ["Branding",       "6%",   "60%",   "clamp(11px,1.4vw,20px)", "#ffffff", "hk-b", 11, 1.5, 0.065, 0.08],
@@ -351,14 +343,12 @@ function HeroKinetic() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Respect reduced-motion preference
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const hero    = container.closest(".hero");
     const spans   = Array.from(container.querySelectorAll(".hk-word"));
     const speeds  = spans.map(el => parseFloat(el.dataset.speed) || 0.04);
 
-    // Per-word lerp state
     const cur = spans.map(() => ({ x: 0, y: 0 }));
     const tgt = spans.map(() => ({ x: 0, y: 0 }));
 
@@ -373,7 +363,6 @@ function HeroKinetic() {
       });
     };
 
-    // Restore on mouse leave
     const onLeave = () => {
       spans.forEach((_, i) => { tgt[i].x = 0; tgt[i].y = 0; });
     };
@@ -383,14 +372,12 @@ function HeroKinetic() {
 
     let raf;
     const lerp = (a, b, t) => a + (b - a) * t;
-    const SMOOTH = 0.075; // lerp coefficient — ~13 frames to 60% target
+    const SMOOTH = 0.075;
 
     const tick = () => {
       spans.forEach((el, i) => {
         cur[i].x = lerp(cur[i].x, tgt[i].x, SMOOTH);
         cur[i].y = lerp(cur[i].y, tgt[i].y, SMOOTH);
-        // `translate` property is separate from `transform` in CSS Transforms L2
-        // → stacks on top of keyframe animations without overriding them
         el.style.translate = `${cur[i].x.toFixed(2)}px ${cur[i].y.toFixed(2)}px`;
       });
       raf = requestAnimationFrame(tick);
@@ -461,7 +448,6 @@ function GridPortfolio() {
   );
 }
 
-/* ── Stat: contador animado vanilla ──────────────────────────── */
 function CountStat({ to, suffix = "", label }) {
   const ref = useRef(null);
   const [val, setVal] = useState(0);
@@ -494,7 +480,6 @@ function CountStat({ to, suffix = "", label }) {
   );
 }
 
-/* ── Stat: carousel con fade ──────────────────────────────────── */
 function CarouselStat({ items, label }) {
   const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -519,7 +504,6 @@ function CarouselStat({ items, label }) {
   );
 }
 
-/* ── Stat: typewriter vanilla ─────────────────────────────────── */
 function TypewriterStat({ words, label }) {
   const [text, setText] = useState("");
   const stateRef = useRef({ wordIdx: 0, charIdx: 0, deleting: false });
@@ -561,7 +545,6 @@ function TypewriterStat({ words, label }) {
   );
 }
 
-/* ── Sección stats completa ───────────────────────────────────── */
 function StatsSection() {
   return (
     <section style={{paddingTop:0,paddingBottom:80}}>

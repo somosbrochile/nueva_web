@@ -1,5 +1,7 @@
-/* global React, ReactDOM, Nav, Footer, CustomCursor, Magnetic, FadeUp, PageTransition */
-const { useState, useRef, useEffect } = React;
+import React, { useState, useRef, useEffect } from 'react'
+import ReactDOM from 'react-dom/client'
+import { CustomCursor, Magnetic, FadeUp, Nav, Footer, PageTransition } from './site.jsx'
+import './styles.css'
 
 /* ── SVG icons — stroke fino, sin fill ──────────────────────── */
 const PF_ICONS = [
@@ -52,7 +54,7 @@ function PortfolioIcons() {
     if (!container) return;
 
     const isMobile = window.innerWidth <= 768;
-    if (isMobile) return;                         // sin parallax en móvil
+    if (isMobile) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const header  = container.closest(".page-head");
@@ -202,7 +204,6 @@ const FILTERS = [
 function VideoCard({ p }) {
   const [preview, setPreview] = useState(false);
 
-  // Embed URL: autoplay, muted, sin controles, loop
   const embedSrc = `https://www.youtube.com/embed/${p.videoId}` +
     `?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.videoId}` +
     `&rel=0&modestbranding=1&playsinline=1`;
@@ -218,7 +219,6 @@ function VideoCard({ p }) {
     >
       <div className="work-thumb work-thumb--video">
 
-        {/* Thumbnail estático */}
         <img
           src={p.thumb}
           alt={p.brand}
@@ -226,7 +226,6 @@ function VideoCard({ p }) {
           className={"work-thumb-img" + (preview ? " work-thumb-img--hidden" : "")}
         />
 
-        {/* Preview iframe — aparece en hover, pointer-events:none para no bloquear el click del <a> */}
         {preview && (
           <iframe
             className="work-thumb-iframe"
@@ -237,7 +236,6 @@ function VideoCard({ p }) {
           />
         )}
 
-        {/* Play button — oculto durante preview */}
         <div className={"work-play" + (preview ? " work-play--hidden" : "")}>
           <div className="work-play-circle">
             <svg viewBox="0 0 24 24" fill="white" width="22" height="22" style={{marginLeft:2}}>
@@ -245,7 +243,6 @@ function VideoCard({ p }) {
             </svg>
           </div>
         </div>
-
 
       </div>
       <div className="work-foot">
@@ -259,8 +256,6 @@ function VideoCard({ p }) {
   );
 }
 
-/* ── Tarjeta de proyecto ─────────────────────────────────────── */
-/* (el work-foot recibe el gradiente único de marca si p.footGrad está definido) */
 function PlaceholderCard({ p }) {
   return (
     <a
@@ -293,7 +288,6 @@ function PlaceholderCard({ p }) {
   );
 }
 
-/* ── Página Portfolio ────────────────────────────────────────── */
 function Portfolio() {
   const [f, setF] = useState("all");
 
@@ -360,7 +354,7 @@ function Portfolio() {
             </div>
           )}
 
-          {/* Grid videos — 3 columnas (≈70% del tamaño de las tarjetas regulares) */}
+          {/* Grid videos — 3 columnas */}
           {showVideos && (
             <div style={{marginTop: showRegular ? 64 : 0}}>
               <FadeUp>

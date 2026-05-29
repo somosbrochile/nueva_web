@@ -1,4 +1,7 @@
-/* global React, ReactDOM, Nav, Footer, CustomCursor, Magnetic, FadeUp, RevealHeadline, PageTransition */
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { CustomCursor, Magnetic, FadeUp, Nav, Footer, PageTransition } from './site.jsx'
+import './styles.css'
 
 /* ── Claqueta de cine — ilustración CSS pura ─────────────────── */
 function Clapperboard() {

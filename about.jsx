@@ -1,5 +1,7 @@
-/* global React, ReactDOM, Nav, Footer, CustomCursor, Magnetic, FadeUp, StatNumber, PageTransition */
-const { useRef, useState, useEffect } = React;
+import React, { useRef, useState, useEffect } from 'react'
+import ReactDOM from 'react-dom/client'
+import { CustomCursor, Magnetic, FadeUp, StatNumber, Nav, Footer, PageTransition } from './site.jsx'
+import './styles.css'
 
 /* ── Carousel de texto con fade suave ──────────────────────────
    Rota entre palabras cada 2s. Fade out 320ms → cambia → fade in.
@@ -91,8 +93,6 @@ function RocketCanvas() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    /* ── Órbitas elípticas: cx/cy como fracción del canvas, rx/ry en px ─ */
-    /* rx/ry se recalculan al resize como fracción de W y H                */
     const ROCKETS = [
       // cx_r, cy_r, rx_r, ry_r, period,  phase, size, opacity, blur, color
       [ 0.50,  0.50, 0.42, 0.36, 42000, 0.00, 17, 0.15, 0.8, "#f8ac08" ],
@@ -101,11 +101,9 @@ function RocketCanvas() {
       [ 0.50,  0.48, 0.30, 0.22, 35000, 0.65, 15, 0.08, 1.0, "#d00a5f" ],
       [ 0.50,  0.52, 0.38, 0.26, 50000, 0.80, 12, 0.18, 0.7, "#f8ac08" ],
     ];
-    // [cx_r, cy_r, rx_r, ry_r, period, phase, size, opacity, blur, color]
-    const TRAIL = 28; // puntos de estela
+    const TRAIL = 28;
     const trails = ROCKETS.map(() => []);
 
-    /* ── Resize ── */
     let W = 0, H = 0;
     const resize = () => {
       const p = canvas.parentElement;
@@ -117,17 +115,14 @@ function RocketCanvas() {
     const ro = new ResizeObserver(resize);
     ro.observe(canvas.parentElement);
 
-    /* ── Scroll velocity ── */
     let lastSY    = window.scrollY;
     let scrollVel = 0;
     let lastTime  = performance.now();
 
-    /* ── Dibuja un cohete apuntando a +X en (0,0) ── */
     function drawRocketShape(ctx, s, color) {
       const bL = -s * 0.50, bR = s * 0.30, br = s * 0.27;
       ctx.fillStyle = color;
 
-      // Cuerpo cápsula
       ctx.beginPath();
       ctx.arc(bL, 0, br, Math.PI / 2, -Math.PI / 2, true);
       ctx.lineTo(bR, -br);
@@ -135,7 +130,6 @@ function RocketCanvas() {
       ctx.closePath();
       ctx.fill();
 
-      // Cono
       ctx.beginPath();
       ctx.moveTo(bR, -br * 0.72);
       ctx.lineTo(s * 0.72, 0);
@@ -143,7 +137,6 @@ function RocketCanvas() {
       ctx.closePath();
       ctx.fill();
 
-      // Aletas
       [[1], [-1]].forEach(([sign]) => {
         ctx.beginPath();
         ctx.moveTo(bL + s * 0.12,  sign * br);
@@ -153,14 +146,12 @@ function RocketCanvas() {
         ctx.fill();
       });
 
-      // Ventana
       ctx.beginPath();
       ctx.arc(s * 0.04, 0, br * 0.42, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(255,255,255,0.20)";
       ctx.fill();
     }
 
-    /* ── Loop principal ── */
     let raf;
     const TWO_PI = Math.PI * 2;
 
@@ -171,19 +162,17 @@ function RocketCanvas() {
       const sy   = window.scrollY;
       scrollVel  = (sy - lastSY) / Math.max(dt, 1);
       lastSY     = sy;
-      const mult = 1 + Math.abs(scrollVel) * 0.10; // scroll acelera suavemente
+      const mult = 1 + Math.abs(scrollVel) * 0.10;
 
       ctx.clearRect(0, 0, W, H);
 
       ROCKETS.forEach((r, i) => {
         const [cx_r, cy_r, rx_r, ry_r, period,, size, opacity, blur, color] = r;
 
-        // Avanza fase
-        r[5] += (dt / period) * mult;   // r[5] = phase
+        r[5] += (dt / period) * mult;
         if (r[5] >= 1) r[5] -= 1;
         const phase = r[5];
 
-        // Posición en la elipse
         const a     = TWO_PI * phase;
         const RX    = W * rx_r;
         const RY    = H * ry_r;
@@ -192,22 +181,19 @@ function RocketCanvas() {
         const x     = cx + RX * Math.cos(a);
         const y     = cy + RY * Math.sin(a);
 
-        // Dirección tangente (derivada de la elipse) → ángulo del cohete
-        const tdx   = -RX * Math.sin(a);   // dx/da (proporcional)
-        const tdy   =  RY * Math.cos(a);   // dy/da
+        const tdx   = -RX * Math.sin(a);
+        const tdy   =  RY * Math.cos(a);
         const angle = Math.atan2(tdy, tdx);
 
-        // Guarda trail
         trails[i].push({ x, y });
         if (trails[i].length > TRAIL) trails[i].shift();
 
         ctx.save();
         ctx.filter = `blur(${blur}px)`;
 
-        // ── Estela degradé: sólido cerca del cohete, transparente en la cola ──
         const trail = trails[i];
         for (let j = 1; j < trail.length; j++) {
-          const ratio = j / trail.length;       // 0=cola vieja, 1=cerca del cohete
+          const ratio = j / trail.length;
           ctx.globalAlpha = ratio * opacity * 1.8;
           ctx.lineWidth   = ratio * size * 0.18;
           ctx.strokeStyle = color;
@@ -219,10 +205,9 @@ function RocketCanvas() {
         }
         ctx.globalAlpha = 1;
 
-        // ── Cohete con opacidad de lejanía ──
         ctx.globalAlpha = opacity;
         ctx.translate(x, y);
-        ctx.rotate(angle);          // apunta exactamente en la dirección de movimiento
+        ctx.rotate(angle);
         drawRocketShape(ctx, size, color);
 
         ctx.restore();
@@ -261,11 +246,9 @@ const VALUES = [
   },
 ];
 
-/* ── Tarjeta de valor con borde degradado y glow cursor ──────── */
 function ValueCard({ t, d, gradFrom, gradTo, glowColor, delay }) {
   const glowRef = useRef(null);
 
-  /* Actualiza el glow directamente en el DOM — sin re-render por pixel */
   const onMove = (e) => {
     if (!glowRef.current) return;
     const r = e.currentTarget.getBoundingClientRect();
@@ -282,15 +265,12 @@ function ValueCard({ t, d, gradFrom, gradTo, glowColor, delay }) {
 
   return (
     <FadeUp delay={delay}>
-      {/* Wrapper con gradiente de borde */}
       <div
         className="value-wrap"
         style={{"--vg-from": gradFrom, "--vg-to": gradTo}}
       >
         <div className="value-card glass" onMouseMove={onMove} onMouseLeave={onLeave}>
-          {/* Glow que sigue al cursor */}
           <div ref={glowRef} className="value-glow" />
-          {/* Contenido */}
           <h3 className="value-title">{t}</h3>
           <p  className="value-desc">{d}</p>
         </div>

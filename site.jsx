@@ -1,8 +1,5 @@
-/* global React, ReactDOM */
-const FM = window.framerMotion || window.Motion || window.motion;
-window.framerMotion = FM;
-const { useEffect, useRef, useState, useCallback, createContext, useContext } = React;
-const { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } = FM;
+import React, { useEffect, useRef, useState, useCallback, createContext, useContext } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
 
 /* ------------------------------------------------------------------
    1. CUSTOM CURSOR — portal-based, always visible
@@ -10,7 +7,7 @@ const { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScr
    position:fixed is never broken by parent transform/stacking contexts
    (Framer Motion, page-enter animation, etc.)
    ------------------------------------------------------------------ */
-function CustomCursor() {
+export function CustomCursor() {
   useEffect(() => {
     // Create elements directly in body — completely outside React's tree
     const dot  = document.createElement("div");
@@ -87,7 +84,7 @@ function CustomCursor() {
 /* ------------------------------------------------------------------
    2. MAGNETIC BUTTON — translate towards cursor when near
    ------------------------------------------------------------------ */
-function Magnetic({ children, strength = 0.35, className = "" }) {
+export function Magnetic({ children, strength = 0.35, className = "" }) {
   const ref = useRef(null);
   const tx = useRef(0), ty = useRef(0);
   const cur = useRef({ x: 0, y: 0 });
@@ -126,7 +123,7 @@ function Magnetic({ children, strength = 0.35, className = "" }) {
 /* ------------------------------------------------------------------
    3. REVEAL ON SCROLL — fade-up + slide-in primitives
    ------------------------------------------------------------------ */
-function FadeUp({ children, delay = 0, y = 16, className = "", as = "div" }) {
+export function FadeUp({ children, delay = 0, y = 16, className = "", as = "div" }) {
   const Comp = motion[as];
   return (
     <Comp
@@ -142,7 +139,7 @@ function FadeUp({ children, delay = 0, y = 16, className = "", as = "div" }) {
 }
 
 /* Word-by-word headline reveal with mask */
-function RevealHeadline({ lines, delay = 0 }) {
+export function RevealHeadline({ lines, delay = 0 }) {
   return (
     <h1>
       {lines.map((line, li) => (
@@ -164,7 +161,7 @@ function RevealHeadline({ lines, delay = 0 }) {
 /* ------------------------------------------------------------------
    4. STATS COUNTER
    ------------------------------------------------------------------ */
-function StatNumber({ to, suffix = "", duration = 1.6 }) {
+export function StatNumber({ to, suffix = "", duration = 1.6 }) {
   const ref = useRef(null);
   const [val, setVal] = useState(0);
   useEffect(() => {
@@ -191,7 +188,7 @@ function StatNumber({ to, suffix = "", duration = 1.6 }) {
 /* ------------------------------------------------------------------
    5. HEADER NAV — page-aware active state, scroll-aware bg
    ------------------------------------------------------------------ */
-function Nav({ active }) {
+export function Nav({ active }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -210,7 +207,7 @@ function Nav({ active }) {
     <header className="nav-wrapper">
       <div className={"nav-island" + (scrolled ? " is-scrolled" : "")}>
         <a href="index.html" className="nav-logo" aria-label="Somos Bro · home">
-          <img src="../assets/logo-somosbro-white.png" alt="Somos Bro" style={{height:30,width:"auto"}} />
+          <img src="/assets/logo-somosbro-white.png" alt="Somos Bro" style={{height:30,width:"auto"}} />
         </a>
         <nav className="nav-links">
           {links.map(([label, href]) => (
@@ -231,7 +228,7 @@ function Nav({ active }) {
 /* ------------------------------------------------------------------
    6. FOOTER — shared across pages
    ------------------------------------------------------------------ */
-function Footer() {
+export function Footer() {
   return (
     <footer>
       <div className="container">
@@ -279,14 +276,14 @@ function Footer() {
 /* ------------------------------------------------------------------
    7. PAGE TRANSITION WRAPPER — fade + slide on first paint
    ------------------------------------------------------------------ */
-function PageTransition({ children }) {
+export function PageTransition({ children }) {
   return <div className="page-enter">{children}</div>;
 }
 
 /* ------------------------------------------------------------------
    Marquee strip — looping word band
    ------------------------------------------------------------------ */
-function Marquee({ items }) {
+export function Marquee({ items }) {
   const doubled = [...items, ...items];
   return (
     <div className="marquee">
@@ -301,8 +298,3 @@ function Marquee({ items }) {
     </div>
   );
 }
-
-/* expose */
-Object.assign(window, {
-  CustomCursor, Magnetic, FadeUp, RevealHeadline, StatNumber, Nav, Footer, PageTransition, Marquee
-});
