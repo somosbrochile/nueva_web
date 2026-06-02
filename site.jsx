@@ -350,7 +350,7 @@ export function PageTransition({ children }) {
    Marquee strip — looping word band
    ------------------------------------------------------------------ */
 export function Marquee({ items }) {
-  const doubled = [...items, ...items];
+  const doubled = [...items, ...items, ...items, ...items];
   return (
     <div className="marquee">
       <div className="marquee-track">
