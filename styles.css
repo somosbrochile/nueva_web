@@ -759,7 +759,7 @@ footer { padding: 80px 0 40px; border-top: 1px solid var(--line); }
 
 /* ----- marquee strip ----- */
 .marquee { overflow: hidden; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.marquee-track { display: flex; gap: 48px; white-space: nowrap; animation: marquee 20s linear infinite; }
+.marquee-track { display: flex; gap: 48px; white-space: nowrap; animation: marquee 30s linear infinite; width: max-content; }
 .marquee-item { font-family: var(--font-h); font-weight: 700; font-size: clamp(16px,3vw,22px); letter-spacing: -.01em; display: inline-flex; align-items: center; gap: 48px; }
 .marquee-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
 .marquee-item .dot.b { background: var(--magenta); }
@@ -767,7 +767,7 @@ footer { padding: 80px 0 40px; border-top: 1px solid var(--line); }
 .marquee-item .dot.d { background: var(--yellow); }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (max-width: 768px) {
-  .marquee-track { animation-duration: 12s; gap: 24px; }
+  .marquee-track { animation-duration: 18s; gap: 24px; }
   .marquee-item  { font-size: 18px !important; gap: 24px; }
 }
 
