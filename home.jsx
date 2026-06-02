@@ -622,8 +622,8 @@ function StatsSection() {
       <div className="container">
         <FadeUp>
           <div className="stats-grid">
-            <CountStat to={2018} label="Trabajando contigo" />
-            <CountStat to={6} suffix="M+" label="Views generadas" />
+            <CountStat to={2022} label="Trabajando contigo" />
+            <CountStat to={21} suffix="M+" label="Views generadas" />
             <CarouselStat items={["Salud","Legal","Finanzas","Lifestyle","Educación"]} label="Industrias" />
             <TypewriterStat words={["Santiago","Chile","LATAM"]} label="Dónde operamos" />
           </div>
@@ -790,8 +790,8 @@ function Home() {
               <span className="hero-meta-value">PYMES, startups y marcas que recién despegan en Chile y LATAM.</span>
             </div>
             <div className="hero-meta-item">
-              <span className="hero-meta-label">Disponibles</span>
-              <span className="hero-meta-value">Tomamos 4 proyectos al mes. Quedan 2 cupos para mayo.</span>
+              <span className="hero-meta-label">Hablemos</span>
+              <span className="hero-meta-value">Agendemos una llamada. Sin costo, sin presión.</span>
             </div>
             <div className="hero-meta-item" style={{textAlign:"right"}}>
               <span className="hero-meta-label">Scroll</span>
