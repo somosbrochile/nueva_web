@@ -93,7 +93,7 @@ function RocketCanvas() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    const ROCKETS = [
+    const ALL_ROCKETS = [
       // cx_r, cy_r, rx_r, ry_r, period,  phase, size, opacity, blur, color
       [ 0.50,  0.50, 0.42, 0.36, 42000, 0.00, 17, 0.15, 0.8, "#f8ac08" ],
       [ 0.45,  0.50, 0.35, 0.28, 38000, 0.20, 13, 0.10, 1.0, "#58bba0" ],
@@ -101,6 +101,10 @@ function RocketCanvas() {
       [ 0.50,  0.48, 0.30, 0.22, 35000, 0.65, 15, 0.08, 1.0, "#d00a5f" ],
       [ 0.50,  0.52, 0.38, 0.26, 50000, 0.80, 12, 0.18, 0.7, "#f8ac08" ],
     ];
+    // En móvil solo los primeros 2 cohetes para ahorrar GPU
+    const isMobile = window.innerWidth < 768;
+    const ROCKETS = isMobile ? ALL_ROCKETS.slice(0, 2) : ALL_ROCKETS;
+
     const TRAIL = 28;
     const trails = ROCKETS.map(() => []);
 
@@ -115,8 +119,23 @@ function RocketCanvas() {
     const ro = new ResizeObserver(resize);
     ro.observe(canvas.parentElement);
 
-    let lastSY    = window.scrollY;
-    let scrollVel = 0;
+    // Scroll velocity — throttled via rAF para no correr en cada evento scroll
+    let lastScrollY = window.scrollY;
+    let scrollVel   = 0;
+    let ticking     = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          scrollVel   = (window.scrollY - lastScrollY) * 0.05;
+          lastScrollY = window.scrollY;
+          ticking     = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     let lastTime  = performance.now();
 
     function drawRocketShape(ctx, s, color) {
@@ -159,9 +178,6 @@ function RocketCanvas() {
       const dt  = Math.min(now - lastTime, 50);
       lastTime  = now;
 
-      const sy   = window.scrollY;
-      scrollVel  = (sy - lastSY) / Math.max(dt, 1);
-      lastSY     = sy;
       const mult = 1 + Math.abs(scrollVel) * 0.10;
 
       ctx.clearRect(0, 0, W, H);
@@ -217,7 +233,11 @@ function RocketCanvas() {
     };
     raf = requestAnimationFrame(tick);
 
-    return () => { cancelAnimationFrame(raf); ro.disconnect(); };
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return <canvas ref={canvasRef} className="rocket-canvas" />;
