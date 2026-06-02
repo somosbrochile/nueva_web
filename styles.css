@@ -766,6 +766,7 @@ footer { padding: 80px 0 40px; border-top: 1px solid var(--line); }
 .marquee-item .dot.c { background: var(--blue); }
 .marquee-item .dot.d { background: var(--yellow); }
 @keyframes marquee { from { transform: translateX(0);} to { transform: translateX(-50%);} }
+@media (max-width: 768px) { .marquee-track { animation-duration: 45s; } }
 
 /* ----- page header (interior pages) ----- */
 .page-head { padding: 240px 0 112px; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
