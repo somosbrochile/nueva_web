@@ -506,12 +506,11 @@ section { padding: 160px 0; position: relative; }
 }
 .portfolio-card:hover .portfolio-card-cta { transform: translateY(0); opacity: 1; }
 
-/* Touch: tap revela overlay y congela imagen (reemplaza scroll en móvil) */
+/* Touch: tap activa scroll de imagen + overlay (mismo efecto que hover en desktop) */
 @media (max-width: 768px) {
-  .portfolio-card-scroll-img {
-    animation: none !important;
-    transition: none !important;
-    transform: translateY(0%) translateZ(0) !important;
+  .portfolio-card.is-tapped .portfolio-card-scroll-img {
+    animation: portfolio-scroll-down var(--scroll-dur, 8s) linear forwards;
+    transition: none;
   }
   .portfolio-card.is-tapped .portfolio-card-overlay {
     opacity: 1;
