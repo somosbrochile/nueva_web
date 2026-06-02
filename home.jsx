@@ -6,6 +6,12 @@ import './styles.css'
 
 const FORMSPREE_URL = "https://formspree.io/f/mjgzzqnk";
 
+// Detecta Safari: tiene "Safari" en el UA pero NO "Chrome" (Chrome incluye ambas palabras)
+const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+// Aplica clase al <html> para los fallbacks CSS del nav
+if (IS_SAFARI) document.documentElement.classList.add("is-safari");
+
 /* ----------------------------------------------------------------
    INSTAGRAM — pega aquí tu token de acceso
    Instrucciones: ver INSTAGRAM_SETUP.md en la raíz del proyecto
@@ -83,7 +89,7 @@ function AboutSection() {
     const ro = new ResizeObserver(resize);
     ro.observe(section);
 
-    const MAX_PARTICLES = 20;
+    const MAX_PARTICLES = IS_SAFARI ? 8 : 20;
 
     /* --- spawnea partículas respetando el límite máximo --- */
     const spawn = (x, y) => {
@@ -368,8 +374,20 @@ function HeroKinetic() {
     const cur = spans.map(() => ({ x: 0, y: 0 }));
     const tgt = spans.map(() => ({ x: 0, y: 0 }));
 
-    // En móvil no hay parallax — el CSS ya congela las palabras flotantes
+    // En móvil y Safari se reduce/desactiva el parallax
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    // Safari: oculta palabras más allá de las primeras 3 y baja opacidad
+    if (IS_SAFARI) {
+      spans.forEach((el, i) => {
+        if (i >= 3) {
+          el.style.display = "none";
+        } else {
+          el.style.opacity = "0.05";
+          el.style.animationName = "none"; // sin animación CSS en Safari
+        }
+      });
+    }
 
     let moveRaf = null;
     const onMove = (e) => {

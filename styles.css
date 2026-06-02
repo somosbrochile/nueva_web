@@ -115,11 +115,23 @@ section { padding: 160px 0; position: relative; }
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 2px 24px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.04);
   transition: background 400ms var(--ease-out), box-shadow 400ms, border-color 400ms;
+  /* Fuerza compositing layer — evita repaint en scroll en WebKit */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .nav-island.is-scrolled {
   background: rgba(10,7,12,.88);
   border-color: rgba(255,255,255,.14);
   box-shadow: 0 8px 40px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.07);
+}
+/* Safari: reemplaza backdrop-filter por fondo opaco equivalente */
+.is-safari .nav-island {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(10,7,12,.82);
+}
+.is-safari .nav-island.is-scrolled {
+  background: rgba(10,7,12,.92);
 }
 .nav-logo { display: flex; align-items: center; gap: 12px; }
 .nav-logo img { height: 32px; width: auto; display: block; }
@@ -252,10 +264,28 @@ section { padding: 160px 0; position: relative; }
 @media (max-width: 720px) { .cursor-dot, .cursor-ring, .cursor-label { display: none; } }
 
 /* ----- hero ----- */
-.hero { min-height: 100vh; display: flex; align-items: flex-end; padding-bottom: 120px; padding-top: 180px; position: relative; overflow: hidden; }
+.hero {
+  min-height: 100vh; display: flex; align-items: flex-end;
+  padding-bottom: 120px; padding-top: 180px;
+  position: relative; overflow: hidden;
+  /* Fuerza compositing layer en WebKit — evita que el hero repinte en cada frame */
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+.hero > .container {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
 .hero-bg-blob {
-  position: absolute; pointer-events: none; filter: blur(120px); opacity: .55;
+  position: absolute; pointer-events: none;
   border-radius: 50%;
+  /* Usa transform en lugar de top/left animables para evitar repaint.
+     filter:blur() en blobs estáticos es OK — no se anima, solo se pinta una vez. */
+  filter: blur(120px); opacity: .55;
+  /* Promueve cada blob a su propio compositing layer */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
 }
 .hero-bg-blob.a { width: 900px; height: 900px; background: radial-gradient(circle,#d00a5f 0%,#491c4b 40%,transparent 70%); top: -280px; right: -220px; opacity: .32; }
 .hero-bg-blob.b { width: 700px; height: 700px; background: radial-gradient(circle,#206ea6 0%,#2d1230 45%,transparent 70%); bottom: -200px; left: -200px; opacity: .30; }
@@ -302,6 +332,8 @@ section { padding: 160px 0; position: relative; }
   animation-direction: alternate;
   /* `translate` (parallax, set by JS) + `transform` (CSS anim) stack independently */
   will-change: translate, transform;
+  /* WebKit: fuerza GPU layer para que la animación CSS corra en el compositor */
+  -webkit-transform: translateZ(0);
 }
 
 /* --- 6 distinct 3D float signatures --- */
