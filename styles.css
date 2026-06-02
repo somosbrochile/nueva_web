@@ -58,6 +58,9 @@ input, textarea { font: inherit; color: inherit; }
 h1, h2, h3, h4 { font-family: var(--font-h); font-weight: 800; letter-spacing: -.04em; line-height: .92; }
 h1 { font-size: clamp(64px, 10vw, 160px); font-weight: 900; }
 @media (max-width: 768px) { h1 { font-size: clamp(38px, 10vw, 52px); } }
+/* <br> solo visible en móvil */
+.mobile-br { display: none; }
+@media (max-width: 768px) { .mobile-br { display: block; } }
 h2 { font-size: clamp(44px, 6vw, 96px); }
 @media (max-width: 768px) {
   h2 { font-size: clamp(28px, 7vw, 40px); word-break: normal; overflow-wrap: break-word; }
