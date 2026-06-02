@@ -63,7 +63,11 @@ function PortfolioIcons() {
     const cur     = spans.map(() => ({ x:0, y:0 }));
     const tgt     = spans.map(() => ({ x:0, y:0 }));
 
+    let lastMove = 0;
     const onMove = (e) => {
+      const now = performance.now();
+      if (now - lastMove < 16) return;
+      lastMove = now;
       const r  = (header || container).getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width  / 2);
       const dy = e.clientY - (r.top  + r.height / 2);
