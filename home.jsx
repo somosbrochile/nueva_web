@@ -83,41 +83,54 @@ function AboutSection() {
     const ro = new ResizeObserver(resize);
     ro.observe(section);
 
-    /* --- spawnea 3-5 partículas en la posición del mouse --- */
+    const MAX_PARTICLES = 20;
+
+    /* --- spawnea partículas respetando el límite máximo --- */
     const spawn = (x, y) => {
-      const n = 3 + Math.floor(Math.random() * 3);
+      const slots = MAX_PARTICLES - particles.length;
+      if (slots <= 0) return;
+      const n = Math.min(3 + Math.floor(Math.random() * 3), slots);
       for (let i = 0; i < n; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = 0.6 + Math.random() * 1.8;
         particles.push({
           x, y,
           vx:    Math.cos(angle) * speed,
-          vy:    Math.sin(angle) * speed - 0.8,  // impulso hacia arriba
-          size:  1.5 + Math.random() * 2.5,       // 1.5 – 4px
+          vy:    Math.sin(angle) * speed - 0.8,
+          size:  1.5 + Math.random() * 2.5,
           color: PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)],
           alpha: 0.75 + Math.random() * 0.25,
-          decay: 0.016 + Math.random() * 0.024,   // fade variable
+          decay: 0.016 + Math.random() * 0.024,
         });
       }
     };
 
+    // Throttle a un frame por evento usando rAF; cancela el pendiente antes de crear uno nuevo
+    let moveRaf = null;
     const onMove = (e) => {
-      const r = section.getBoundingClientRect();
-      spawn(e.clientX - r.left, e.clientY - r.top);
+      if (moveRaf !== null) return;
+      moveRaf = requestAnimationFrame(() => {
+        moveRaf = null;
+        const r = section.getBoundingClientRect();
+        spawn(e.clientX - r.left, e.clientY - r.top);
+      });
     };
-    section.addEventListener("mousemove", onMove);
+    section.addEventListener("mousemove", onMove, { passive: true });
 
     /* --- loop de animación --- */
     const tick = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles = particles.filter(p => p.alpha > 0);
+      // Elimina partículas agotadas en lugar de solo filtrar — libera refs del array
+      for (let i = particles.length - 1; i >= 0; i--) {
+        if (particles[i].alpha <= 0) particles.splice(i, 1);
+      }
 
       for (const p of particles) {
         p.x     += p.vx;
         p.y     += p.vy;
-        p.vy    += 0.045;   // gravedad
-        p.vx    *= 0.97;    // rozamiento aire
+        p.vy    += 0.045;
+        p.vx    *= 0.97;
         p.alpha -= p.decay;
 
         ctx.globalAlpha = Math.max(0, p.alpha);
@@ -134,6 +147,7 @@ function AboutSection() {
 
     return () => {
       section.removeEventListener("mousemove", onMove);
+      if (moveRaf !== null) cancelAnimationFrame(moveRaf);
       cancelAnimationFrame(rafId);
       ro.disconnect();
     };
@@ -347,21 +361,28 @@ function HeroKinetic() {
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const hero    = container.closest(".hero");
-    const spans   = Array.from(container.querySelectorAll(".hk-word"));
-    const speeds  = spans.map(el => parseFloat(el.dataset.speed) || 0.04);
+    const hero  = container.closest(".hero");
+    const spans = Array.from(container.querySelectorAll(".hk-word"));
+    const speeds = spans.map(el => parseFloat(el.dataset.speed) || 0.04);
 
     const cur = spans.map(() => ({ x: 0, y: 0 }));
     const tgt = spans.map(() => ({ x: 0, y: 0 }));
 
+    // Throttle: actualiza tgt máximo una vez por frame (16ms) usando rAF.
+    // Cancela el frame pendiente antes de crear uno nuevo para evitar acumulación.
+    let moveRaf = null;
     const onMove = (e) => {
-      if (!hero) return;
-      const r  = hero.getBoundingClientRect();
-      const dx = e.clientX - (r.left + r.width  / 2);
-      const dy = e.clientY - (r.top  + r.height / 2);
-      spans.forEach((_, i) => {
-        tgt[i].x = dx * speeds[i];
-        tgt[i].y = dy * speeds[i];
+      if (moveRaf !== null) return; // ya hay un frame pendiente, lo dejamos correr
+      moveRaf = requestAnimationFrame(() => {
+        moveRaf = null;
+        if (!hero) return;
+        const r  = hero.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width  / 2);
+        const dy = e.clientY - (r.top  + r.height / 2);
+        spans.forEach((_, i) => {
+          tgt[i].x = dx * speeds[i];
+          tgt[i].y = dy * speeds[i];
+        });
       });
     };
 
@@ -369,10 +390,12 @@ function HeroKinetic() {
       spans.forEach((_, i) => { tgt[i].x = 0; tgt[i].y = 0; });
     };
 
-    (hero || window).addEventListener("mousemove", onMove);
-    (hero || window).addEventListener("mouseleave", onLeave);
+    (hero || window).addEventListener("mousemove", onMove, { passive: true });
+    (hero || window).addEventListener("mouseleave", onLeave, { passive: true });
 
-    let raf;
+    // IntersectionObserver: pausa el loop RAF cuando el hero sale del viewport
+    let raf = null;
+    let active = false;
     const lerp = (a, b, t) => a + (b - a) * t;
     const SMOOTH = 0.075;
 
@@ -382,14 +405,40 @@ function HeroKinetic() {
         cur[i].y = lerp(cur[i].y, tgt[i].y, SMOOTH);
         el.style.translate = `${cur[i].x.toFixed(2)}px ${cur[i].y.toFixed(2)}px`;
       });
-      raf = requestAnimationFrame(tick);
+      if (active) raf = requestAnimationFrame(tick);
     };
-    tick();
+
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!active) { active = true; raf = requestAnimationFrame(tick); }
+      } else {
+        active = false;
+        if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+        if (moveRaf !== null) { cancelAnimationFrame(moveRaf); moveRaf = null; }
+      }
+    }, { threshold: 0 });
+
+    io.observe(hero || container);
+    // Arranca activo (el hero está visible en el primer render)
+    active = true;
+    raf = requestAnimationFrame(tick);
+
+    // will-change solo en spans dentro del viewport
+    const visObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.style.willChange = entry.isIntersecting ? "transform" : "auto";
+      });
+    }, { threshold: 0 });
+    spans.forEach(s => visObs.observe(s));
 
     return () => {
+      active = false;
       cancelAnimationFrame(raf);
+      if (moveRaf !== null) cancelAnimationFrame(moveRaf);
       (hero || window).removeEventListener("mousemove", onMove);
       (hero || window).removeEventListener("mouseleave", onLeave);
+      io.disconnect();
+      visObs.disconnect();
     };
   }, []);
 
