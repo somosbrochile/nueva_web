@@ -212,7 +212,7 @@ function GaleriaSection() {
             <FadeUp delay={0.05}><h2 style={{marginTop:16}}>Detrás de <span className="grad-text">cámara.</span></h2></FadeUp>
           </div>
           <FadeUp delay={0.1}>
-            <p style={{maxWidth:"38ch",color:"var(--ink-2)",fontSize:17}}>Una selección de producciones, marcas y momentos reales.</p>
+            <p style={{maxWidth:"38ch",color:"var(--ink-2)",fontSize:17}}>Una buena foto no muestra tu marca. La transforma.</p>
           </FadeUp>
         </div>
         <div className="galeria-grid">
