@@ -205,7 +205,7 @@ function RocketCanvas() {
         if (trails[i].length > TRAIL) trails[i].shift();
 
         ctx.save();
-        ctx.filter = `blur(${blur}px)`;
+        ctx.filter = 'none';
 
         const trail = trails[i];
         for (let j = 1; j < trail.length; j++) {
