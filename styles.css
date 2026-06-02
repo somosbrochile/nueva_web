@@ -396,12 +396,14 @@ section { padding: 160px 0; position: relative; }
   }
   .service-card:hover .arrow { background: var(--orange); border-color: var(--orange); transform: rotate(-45deg); }
 }
-/* Touch: mismo estado visual que el hover de desktop */
-.service-card.is-touched {
+/* Scroll reveal: card activa al entrar al viewport en móvil */
+.service-card.is-active {
   background: var(--bg-3);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 1px rgba(255,255,255,.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), -4px 0 0 0 var(--orange), 0 0 0 1px rgba(255,255,255,.1);
 }
-.service-card.is-touched .arrow { background: var(--orange); border-color: var(--orange); transform: rotate(-45deg); }
+.service-card.is-active .arrow { background: var(--orange); border-color: var(--orange); transform: rotate(-45deg); }
+.service-card.is-active h3 { color: #fff; }
+.service-card.is-active .service-num { color: var(--orange); }
 
 /* ----- portfolio horizontal ----- */
 .portfolio { padding-left: 0; padding-right: 0; }

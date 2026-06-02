@@ -695,22 +695,18 @@ function Home() {
   useEffect(() => {
     if (!window.matchMedia("(max-width: 768px)").matches) return;
 
-    // Service cards: touchstart añade .is-touched, touchend lo remueve tras 300ms
+    // Service cards: scroll reveal — .is-active cuando la card llega al centro del viewport
     const serviceCards = Array.from(document.querySelectorAll(".service-card"));
-    const touchHandlers = serviceCards.map(card => {
-      let timer = null;
-      const onStart = () => {
-        card.classList.add("is-touched");
-        clearTimeout(timer);
-      };
-      const onEnd = () => {
-        timer = setTimeout(() => card.classList.remove("is-touched"), 300);
-      };
-      card.addEventListener("touchstart", onStart, { passive: true });
-      card.addEventListener("touchend",   onEnd,   { passive: true });
-      card.addEventListener("touchcancel",onEnd,   { passive: true });
-      return { card, onStart, onEnd };
-    });
+    const serviceIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-active");
+        } else {
+          entry.target.classList.remove("is-active");
+        }
+      });
+    }, { threshold: 0.6 });
+    serviceCards.forEach(card => serviceIO.observe(card));
 
     // Portfolio cards: tap alterna .is-tapped. Tap en otro card cierra el anterior.
     const portfolioCards = Array.from(document.querySelectorAll(".portfolio-card"));
@@ -728,11 +724,7 @@ function Home() {
     });
 
     return () => {
-      touchHandlers.forEach(({ card, onStart, onEnd }) => {
-        card.removeEventListener("touchstart",  onStart);
-        card.removeEventListener("touchend",    onEnd);
-        card.removeEventListener("touchcancel", onEnd);
-      });
+      serviceIO.disconnect();
       portfolioHandlers.forEach(({ card, onTouch }) => {
         card.removeEventListener("touchend", onTouch);
       });
