@@ -211,6 +211,7 @@ export function Nav({ active }) {
     ["Servicios", "services.html"],
     ["Portfolio", "portfolio.html"],
     ["Nosotros", "about.html"],
+    ["Blog", "blog/index.html"],
     ["Contacto", "contact.html"],
   ];
 

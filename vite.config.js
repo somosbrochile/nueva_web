@@ -11,6 +11,7 @@ export default defineConfig({
         services:  'services.html',
         portfolio: 'portfolio.html',
         contact:   'contact.html',
+        blog:      'blog/index.html',
       }
     }
   }
