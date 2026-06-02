@@ -759,7 +759,7 @@ footer { padding: 80px 0 40px; border-top: 1px solid var(--line); }
 
 /* ----- marquee strip ----- */
 .marquee { overflow: hidden; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.marquee-track { display: flex; gap: 48px; white-space: nowrap; animation: marquee 42s linear infinite; }
+.marquee-track { display: flex; gap: 48px; white-space: nowrap; animation: marquee 20s linear infinite; }
 .marquee-item { font-family: var(--font-h); font-weight: 700; font-size: clamp(14px,1.6vw,22px); letter-spacing: -.01em; display: inline-flex; align-items: center; gap: 48px; }
 .marquee-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); }
 .marquee-item .dot.b { background: var(--magenta); }
