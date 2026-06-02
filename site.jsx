@@ -198,10 +198,10 @@ export function Nav({ active }) {
   }, []);
   const links = [
     ["Home", "index.html"],
-    ["Services", "services.html"],
+    ["Servicios", "services.html"],
     ["Portfolio", "portfolio.html"],
     ["Nosotros", "about.html"],
-    ["Contact", "contact.html"],
+    ["Contacto", "contact.html"],
   ];
   return (
     <header className="nav-wrapper">
@@ -266,7 +266,7 @@ export function Footer() {
         </div>
         <div className="footer-bot">
           <span>© 2026 Somos Bro · Santiago, CL</span>
-          <span>Hecho con 🤘🏼 desde Santiago</span>
+          <span>Construimos marcas digitales desde Santiago · Chile y LATAM</span>
         </div>
       </div>
     </footer>
