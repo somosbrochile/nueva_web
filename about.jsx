@@ -334,13 +334,13 @@ function About() {
 
               {/* 1 — Año desde */}
               <div className="stat">
-                <StatNumber to={2018} />
+                <StatNumber to={2022} />
                 <div className="stat-label">Trabajando contigo</div>
               </div>
 
               {/* 2 — Views */}
               <div className="stat">
-                <StatNumber to={6} suffix="M+" />
+                <StatNumber to={21} suffix="M+" />
                 <div className="stat-label">Views generadas</div>
               </div>
 

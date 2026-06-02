@@ -88,7 +88,7 @@ function Services() {
               <FadeUp delay={0.05}><h1 style={{marginTop:24,maxWidth:"14ch"}}>Cinco especialidades. <span className="grad-text">Un equipo.</span></h1></FadeUp>
               <FadeUp delay={0.12}>
                 <p style={{maxWidth:"52ch",fontSize:20,marginTop:32,color:"var(--ink-2)"}}>
-                  Trabajamos en paquete o por servicio. Si tu marca necesita estrategia, contenido y sitio web, lo hacemos todo bajo un solo brief — sin pasarte de proveedor en proveedor.
+                  Tu cliente decide si confía en ti antes de leer una sola palabra. El contenido, el diseño y la marca lo dicen todo en segundos.
                 </p>
               </FadeUp>
             </div>
