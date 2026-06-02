@@ -92,7 +92,7 @@ function Contact() {
         <div className="blob" style={{background:"radial-gradient(circle,#f8ac08,transparent 70%)"}} />
         <div className="container">
           <FadeUp><span className="eyebrow">Contacto</span></FadeUp>
-          <FadeUp delay={0.05}><h1 style={{marginTop:24,maxWidth:"14ch"}}>Tu proyecto<br className="mobile-br" /> <span className="grad-text">empieza aquí.</span></h1></FadeUp>
+          <FadeUp delay={0.05}><h1 style={{marginTop:24,maxWidth:"14ch"}}>Tu proyecto <span className="grad-text">empieza aquí.</span></h1></FadeUp>
           <FadeUp delay={0.12}>
             <p style={{maxWidth:"58ch",fontSize:20,marginTop:32,color:"var(--ink-2)"}}>
               Cuéntanos qué proyecto tienes. Respondemos en menos de 24h y agendamos una llamada sin costo.
