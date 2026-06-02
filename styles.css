@@ -140,6 +140,89 @@ section { padding: 160px 0; position: relative; }
 .nav-logo { display: flex; align-items: center; gap: 12px; }
 .nav-logo img { height: 32px; width: auto; display: block; }
 .nav-links { display: flex; align-items: center; gap: 2px; }
+
+/* ── Hamburguesa — solo visible en móvil ── */
+.nav-hamburger {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.06);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 200ms, border-color 200ms;
+  flex-shrink: 0;
+}
+.nav-hamburger:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); }
+
+@media (max-width: 768px) {
+  .nav-links      { display: none; }
+  .nav-cta-desktop { display: none; }
+  .nav-hamburger  { display: flex; }
+}
+
+/* ── Menú fullscreen móvil ── */
+.mobile-menu {
+  display: none; /* oculto en desktop */
+  position: fixed; inset: 0;
+  z-index: 49; /* debajo del nav (z-index 50) */
+  background: #0a070c;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0;
+  /* Estado cerrado */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms cubic-bezier(0.23,1,0.32,1);
+}
+.mobile-menu.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu { display: flex; }
+}
+
+/* Links del menú */
+@keyframes menu-link-in {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu-links {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  width: 100%;
+}
+
+.mobile-menu-link {
+  font-family: var(--font-h);
+  font-size: 36px; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1.1;
+  color: var(--ink-2);
+  padding: 10px 24px;
+  border-radius: 12px;
+  transition: color 160ms, background 160ms;
+  /* Animación de entrada — solo cuando el menú está abierto */
+  opacity: 0;
+}
+.mobile-menu.is-open .mobile-menu-link {
+  animation: menu-link-in 380ms cubic-bezier(0.23,1,0.32,1) both;
+}
+.mobile-menu-link.is-active,
+.mobile-menu-link:active { color: var(--ink); }
+.mobile-menu-link:active  { background: rgba(255,255,255,.05); }
+
+.mobile-menu-cta {
+  margin-top: 32px;
+  font-size: 15px;
+  opacity: 0;
+}
+.mobile-menu.is-open .mobile-menu-cta {
+  animation: menu-link-in 380ms 0.42s cubic-bezier(0.23,1,0.32,1) both;
+}
 .nav-link {
   font-family: var(--font-b); font-size: 13px; font-weight: 500;
   padding: 8px 14px; border-radius: 999px;

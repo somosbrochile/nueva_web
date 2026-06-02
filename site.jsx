@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion'
 
 /* ------------------------------------------------------------------
@@ -190,12 +191,21 @@ export function StatNumber({ to, suffix = "", duration = 1.6 }) {
    ------------------------------------------------------------------ */
 export function Nav({ active }) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Bloquea el scroll del body mientras el menú está abierto
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   const links = [
     ["Home", "index.html"],
     ["Servicios", "services.html"],
@@ -203,25 +213,81 @@ export function Nav({ active }) {
     ["Nosotros", "about.html"],
     ["Contacto", "contact.html"],
   ];
-  return (
-    <header className="nav-wrapper">
-      <div className={"nav-island" + (scrolled ? " is-scrolled" : "")}>
-        <a href="index.html" className="nav-logo" aria-label="Somos Bro · home">
-          <img src="/assets/logo-somosbro-white.png" alt="Somos Bro" style={{height:30,width:"auto"}} />
-        </a>
-        <nav className="nav-links">
-          {links.map(([label, href]) => (
-            <a key={href} href={href} className={"nav-link" + (active === href ? " is-active" : "")}>{label}</a>
-          ))}
-        </nav>
-        <Magnetic strength={0.25}>
-          <a className="btn btn-primary" href="contact.html" style={{padding:"10px 18px",fontSize:13}}>
-            Hablemos
-            <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+
+  const menuEl = (
+    <div className={"mobile-menu" + (menuOpen ? " is-open" : "")} aria-hidden={!menuOpen}>
+      <nav className="mobile-menu-links">
+        {links.map(([label, href], i) => (
+          <a
+            key={href}
+            href={href}
+            className={"mobile-menu-link" + (active === href ? " is-active" : "")}
+            style={{ animationDelay: menuOpen ? `${0.05 + i * 0.07}s` : "0s" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            {label}
           </a>
-        </Magnetic>
-      </div>
-    </header>
+        ))}
+      </nav>
+      <a
+        className="btn btn-primary mobile-menu-cta"
+        href="contact.html"
+        onClick={() => setMenuOpen(false)}
+      >
+        Hablemos
+        <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  );
+
+  return (
+    <>
+      <header className="nav-wrapper">
+        <div className={"nav-island" + (scrolled ? " is-scrolled" : "")}>
+          <a href="index.html" className="nav-logo" aria-label="Somos Bro · home">
+            <img src="/assets/logo-somosbro-white.png" alt="Somos Bro" style={{height:30,width:"auto"}} />
+          </a>
+
+          {/* Links desktop */}
+          <nav className="nav-links">
+            {links.map(([label, href]) => (
+              <a key={href} href={href} className={"nav-link" + (active === href ? " is-active" : "")}>{label}</a>
+            ))}
+          </nav>
+
+          {/* Botón hamburguesa — solo móvil */}
+          <button
+            className={"nav-hamburger" + (menuOpen ? " is-open" : "")}
+            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            {menuOpen ? (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="5" y1="5" x2="19" y2="19"/>
+                <line x1="19" y1="5" x2="5" y2="19"/>
+              </svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="3" y1="6"  x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+            )}
+          </button>
+
+          <Magnetic strength={0.25}>
+            <a className="btn btn-primary nav-cta-desktop" href="contact.html" style={{padding:"10px 18px",fontSize:13}}>
+              Hablemos
+              <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </a>
+          </Magnetic>
+        </div>
+      </header>
+
+      {/* Portal al body — escapa del PageTransition wrapper que tiene transform y rompe position:fixed */}
+      {createPortal(menuEl, document.body)}
+    </>
   );
 }
 
