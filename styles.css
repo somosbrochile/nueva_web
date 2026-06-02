@@ -656,6 +656,11 @@ section { padding: 160px 0; position: relative; }
 /* ----- founders ----- */
 .founders-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
 @media (max-width: 720px) { .founders-grid { grid-template-columns: 1fr; } }
+
+@media (max-width: 768px) {
+  .about-values-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .about-values-cards { grid-template-columns: 1fr !important; }
+}
 .founder { padding: 32px; border-radius: 24px; border: 1px solid var(--line); position: relative; transition: border-color .3s, background .3s; cursor: none; min-height: 360px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
 .founder:hover { background: var(--bg-3); border-color: var(--line-2); }
 .founder-avatar {

@@ -299,7 +299,7 @@ function About() {
       {/* VALORES */}
       <section>
         <div className="container">
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1.3fr",gap:80,alignItems:"start"}}>
+          <div className="about-values-grid" style={{display:"grid",gridTemplateColumns:"1fr 1.3fr",gap:80,alignItems:"start"}}>
             <div>
               <FadeUp><span className="eyebrow">Así trabajamos</span></FadeUp>
               <FadeUp delay={0.05}>
@@ -308,7 +308,7 @@ function About() {
                 </h2>
               </FadeUp>
             </div>
-            <div style={{display:"grid",gap:20}}>
+            <div className="about-values-cards" style={{display:"grid",gap:20}}>
               {VALUES.map((v, i) => (
                 <ValueCard
                   key={v.t}
