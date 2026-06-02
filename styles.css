@@ -337,7 +337,20 @@ section { padding: 160px 0; position: relative; }
   100% { transform: perspective(900px) translateY(-17px) translateX(-7px)  rotateZ(-8deg) rotateY( 6deg);  }
 }
 
-/* Hide on very small screens to avoid clutter */
+/* Móvil: 4 palabras visibles, sin parallax, sin animación de seguimiento */
+@media (max-width: 768px) {
+  .hk-word {
+    opacity: 0 !important;    /* ocultas por defecto */
+    animation: none;
+    will-change: auto;
+    translate: none !important;
+  }
+  /* Solo los primeros 4 hijos son visibles en móvil */
+  .hk-word:nth-child(-n+4) {
+    opacity: 0.06 !important;
+    font-size: 50% !important;
+  }
+}
 @media (max-width: 480px) { .hero-kinetic { display: none; } }
 
 /* ----- services ----- */
@@ -383,6 +396,12 @@ section { padding: 160px 0; position: relative; }
   }
   .service-card:hover .arrow { background: var(--orange); border-color: var(--orange); transform: rotate(-45deg); }
 }
+/* Touch: mismo estado visual que el hover de desktop */
+.service-card.is-touched {
+  background: var(--bg-3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 1px rgba(255,255,255,.06);
+}
+.service-card.is-touched .arrow { background: var(--orange); border-color: var(--orange); transform: rotate(-45deg); }
 
 /* ----- portfolio horizontal ----- */
 .portfolio { padding-left: 0; padding-right: 0; }
@@ -486,6 +505,26 @@ section { padding: 160px 0; position: relative; }
               opacity 0.4s 0.06s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .portfolio-card:hover .portfolio-card-cta { transform: translateY(0); opacity: 1; }
+
+/* Touch: tap revela overlay y congela imagen (reemplaza scroll en móvil) */
+@media (max-width: 768px) {
+  .portfolio-card-scroll-img {
+    animation: none !important;
+    transition: none !important;
+    transform: translateY(0%) translateZ(0) !important;
+  }
+  .portfolio-card.is-tapped .portfolio-card-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .portfolio-card.is-tapped .portfolio-card-title {
+    transform: translateY(0);
+  }
+  .portfolio-card.is-tapped .portfolio-card-cta {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 @media (max-width: 900px) {
   .portfolio-grid { grid-template-columns: repeat(2, 1fr); }

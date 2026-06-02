@@ -368,11 +368,13 @@ function HeroKinetic() {
     const cur = spans.map(() => ({ x: 0, y: 0 }));
     const tgt = spans.map(() => ({ x: 0, y: 0 }));
 
-    // Throttle: actualiza tgt máximo una vez por frame (16ms) usando rAF.
-    // Cancela el frame pendiente antes de crear uno nuevo para evitar acumulación.
+    // En móvil no hay parallax — el CSS ya congela las palabras flotantes
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
     let moveRaf = null;
     const onMove = (e) => {
-      if (moveRaf !== null) return; // ya hay un frame pendiente, lo dejamos correr
+      if (isMobile) return;
+      if (moveRaf !== null) return;
       moveRaf = requestAnimationFrame(() => {
         moveRaf = null;
         if (!hero) return;
@@ -689,6 +691,54 @@ function HomeContactForm() {
 }
 
 function Home() {
+  // Touch events para móvil — service-cards y portfolio-cards
+  useEffect(() => {
+    if (!window.matchMedia("(max-width: 768px)").matches) return;
+
+    // Service cards: touchstart añade .is-touched, touchend lo remueve tras 300ms
+    const serviceCards = Array.from(document.querySelectorAll(".service-card"));
+    const touchHandlers = serviceCards.map(card => {
+      let timer = null;
+      const onStart = () => {
+        card.classList.add("is-touched");
+        clearTimeout(timer);
+      };
+      const onEnd = () => {
+        timer = setTimeout(() => card.classList.remove("is-touched"), 300);
+      };
+      card.addEventListener("touchstart", onStart, { passive: true });
+      card.addEventListener("touchend",   onEnd,   { passive: true });
+      card.addEventListener("touchcancel",onEnd,   { passive: true });
+      return { card, onStart, onEnd };
+    });
+
+    // Portfolio cards: tap alterna .is-tapped. Tap en otro card cierra el anterior.
+    const portfolioCards = Array.from(document.querySelectorAll(".portfolio-card"));
+    const portfolioHandlers = portfolioCards.map(card => {
+      const onTouch = (e) => {
+        e.preventDefault(); // evita el delay de 300ms del navegador
+        const isOpen = card.classList.contains("is-tapped");
+        // Cierra todos primero
+        portfolioCards.forEach(c => c.classList.remove("is-tapped"));
+        // Abre este si estaba cerrado
+        if (!isOpen) card.classList.add("is-tapped");
+      };
+      card.addEventListener("touchend", onTouch);
+      return { card, onTouch };
+    });
+
+    return () => {
+      touchHandlers.forEach(({ card, onStart, onEnd }) => {
+        card.removeEventListener("touchstart",  onStart);
+        card.removeEventListener("touchend",    onEnd);
+        card.removeEventListener("touchcancel", onEnd);
+      });
+      portfolioHandlers.forEach(({ card, onTouch }) => {
+        card.removeEventListener("touchend", onTouch);
+      });
+    };
+  }, []);
+
   return (
     <PageTransition>
       <Nav active="index.html" />
