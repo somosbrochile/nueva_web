@@ -207,12 +207,12 @@ export function Nav({ active }) {
   }, [menuOpen]);
 
   const links = [
-    ["Home", "index.html"],
-    ["Servicios", "services.html"],
-    ["Portfolio", "portfolio.html"],
-    ["Nosotros", "about.html"],
-    ["Blog", "blog/index.html"],
-    ["Contacto", "contact.html"],
+    ["Home", "/index.html"],
+    ["Servicios", "/services.html"],
+    ["Portfolio", "/portfolio.html"],
+    ["Nosotros", "/about.html"],
+    ["Blog", "/blog/index.html"],
+    ["Contacto", "/contact.html"],
   ];
 
   const menuEl = (
@@ -232,7 +232,7 @@ export function Nav({ active }) {
       </nav>
       <a
         className="btn btn-primary mobile-menu-cta"
-        href="contact.html"
+        href="/contact.html"
         onClick={() => setMenuOpen(false)}
       >
         Hablemos
@@ -245,7 +245,7 @@ export function Nav({ active }) {
     <>
       <header className="nav-wrapper">
         <div className={"nav-island" + (scrolled ? " is-scrolled" : "")}>
-          <a href="index.html" className="nav-logo" aria-label="Somos Bro · home">
+          <a href="/index.html" className="nav-logo" aria-label="Somos Bro · home">
             <img src="/assets/logo-somosbro-white.png" alt="Somos Bro" style={{height:30,width:"auto"}} />
           </a>
 
@@ -278,7 +278,7 @@ export function Nav({ active }) {
           </button>
 
           <Magnetic strength={0.25}>
-            <a className="btn btn-primary nav-cta-desktop" href="contact.html" style={{padding:"10px 18px",fontSize:13}}>
+            <a className="btn btn-primary nav-cta-desktop" href="/contact.html" style={{padding:"10px 18px",fontSize:13}}>
               Hablemos
               <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
             </a>
@@ -305,23 +305,24 @@ export function Footer() {
               ¿Listos para <span className="grad-text">crear</span>?
             </div>
             <div className="row" style={{marginTop:32}}>
-              <Magnetic><a className="btn btn-primary" href="contact.html">Empezar un proyecto<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
+              <Magnetic><a className="btn btn-primary" href="/contact.html">Empezar un proyecto<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
               <Magnetic><a className="btn btn-ghost" href="mailto:contacto@somosbro.cl">Escribir un correo</a></Magnetic>
             </div>
           </FadeUp>
           <div className="footer-cols">
             <div className="footer-col"><h5>Estudio</h5>
-              <a href="about.html">Nosotros</a>
-              <a href="services.html">Servicios</a>
-              <a href="portfolio.html">Portfolio</a>
-              <a href="contact.html">Contacto</a>
+              <a href="/about.html">Nosotros</a>
+              <a href="/services.html">Servicios</a>
+              <a href="/portfolio.html">Portfolio</a>
+              <a href="/blog/index.html">Blog</a>
+              <a href="/contact.html">Contacto</a>
             </div>
             <div className="footer-col"><h5>Servicios</h5>
-              <a href="services.html">Creación de contenido</a>
-              <a href="services.html">Marca personal</a>
-              <a href="services.html">Diseño web</a>
-              <a href="services.html">Branding</a>
-              <a href="services.html">Logos</a>
+              <a href="/services.html">Creación de contenido</a>
+              <a href="/services.html">Marca personal</a>
+              <a href="/services.html">Diseño web</a>
+              <a href="/services.html">Branding</a>
+              <a href="/services.html">Logos</a>
             </div>
             <div className="footer-col"><h5>Síguenos</h5>
               <a href="https://www.instagram.com/somos_bro/" target="_blank" rel="noreferrer">Instagram ↗</a>

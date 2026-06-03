@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { motion } from 'framer-motion'
 import { CustomCursor, Magnetic, FadeUp, RevealHeadline, StatNumber, Nav, Footer, PageTransition, Marquee } from './site.jsx'
@@ -32,18 +32,36 @@ function OrbScene() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let current = 0;
-    let raf;
-    const lerp = (a, b, t) => a + (b - a) * t;
+    let raf     = null;
+    let active  = false;
+    const lerp  = (a, b, t) => a + (b - a) * t;
 
     const tick = () => {
-      const target = window.scrollY * 0.15;    // factor de rotación por pixel
-      current = lerp(current, target, 0.05);   // suavidad del seguimiento
+      const target = window.scrollY * 0.15;
+      current = lerp(current, target, 0.05);
       if (group) group.style.transform = `rotateY(${current}deg)`;
-      raf = requestAnimationFrame(tick);
+      if (active) raf = requestAnimationFrame(tick);
     };
-    tick();
 
-    return () => cancelAnimationFrame(raf);
+    // Solo corre cuando la sección está visible
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!active) { active = true; raf = requestAnimationFrame(tick); }
+      } else {
+        active = false;
+        if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+      }
+    }, { threshold: 0 });
+
+    io.observe(group.closest("section") || group);
+    active = true;
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      active = false;
+      if (raf !== null) cancelAnimationFrame(raf);
+      io.disconnect();
+    };
   }, []);
 
   return (
