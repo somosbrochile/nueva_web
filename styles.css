@@ -780,6 +780,15 @@ footer { padding: 80px 0 40px; border-top: 1px solid var(--line); }
 .page-head h1 { font-size: clamp(64px,9vw,148px); }
 .page-head .blob { position: absolute; pointer-events: none; filter: blur(120px); width: 500px; height: 500px; border-radius: 50%; top: -100px; right: -100px; opacity: .35; }
 @media (max-width: 768px) { .page-head { padding-top: 140px; padding-bottom: 72px; overflow: hidden; } }
+@media (max-width: 768px) {
+  .page-head h1 {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    max-width: 100% !important;
+  }
+}
 
 /* ----- portfolio grid (page) ----- */
 .work-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
