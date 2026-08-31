@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, Footer, PageTransition, FadeUp, Magnetic } from '../site.jsx'
+import { CustomCursor, Nav, Footer, PageTransition, FadeUp, Magnetic } from '../site.jsx'
 import '../styles.css'
 
 /* ------------------------------------------------------------------
@@ -18,6 +18,7 @@ import '../styles.css'
 export function Article({ meta, children }) {
   return (
     <PageTransition>
+      <CustomCursor />
       <Nav active="/blog" />
 
       <article>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
-import { Nav, Footer, PageTransition, FadeUp } from '../site.jsx'
+import { CustomCursor, Nav, Footer, PageTransition, FadeUp } from '../site.jsx'
 import { articles, categories } from '../blog-data.js'
 import '../styles.css'
 
@@ -13,6 +13,7 @@ function BlogIndex() {
 
   return (
     <PageTransition>
+      <CustomCursor />
       <Nav active="/blog" />
 
       <header className="page-head">
