@@ -8,12 +8,32 @@ import '../styles.css'
    1. Copia el par de archivos de un artículo existente
       (blog/mi-slug.html  +  blog/mi-slug.jsx).
    2. En el .html cambia: <title>, description, keywords, canonical,
-      og:*, y los DOS bloques de schema (BlogPosting + BreadcrumbList).
+      og:*, y los bloques de schema (BlogPosting + BreadcrumbList + FAQ).
    3. En el .jsx cambia el objeto `meta` y el contenido dentro de <Article>.
    4. Registra el artículo en blog-data.js (arriba del todo).
    5. Agrega la entrada al input de vite.config.js.
    6. Agrega la URL al sitemap.xml.
+
+   IMÁGENES
+   - Portada: en `meta` agrega  heroImage: '/assets/tu-foto.jpg'  y
+     heroAlt: 'texto alternativo con keyword'. Si heroImage queda vacío
+     ('') no se muestra nada — el artículo queda limpio.
+   - Fotos dentro del texto: usa el componente <Figure> en el cuerpo:
+        <Figure src="/assets/galeria/foto.jpg" alt="descripcion con keyword"
+                caption="Pie de foto opcional" />
    ------------------------------------------------------------------ */
+
+/* Imagen dentro del cuerpo del artículo (con pie de foto opcional) */
+export function Figure({ src, alt = '', caption }) {
+  return (
+    <FadeUp>
+      <figure className="article-figure">
+        <img src={src} alt={alt} loading="lazy" />
+        {caption && <figcaption>{caption}</figcaption>}
+      </figure>
+    </FadeUp>
+  );
+}
 
 export function Article({ meta, children }) {
   return (
@@ -53,19 +73,29 @@ export function Article({ meta, children }) {
           </div>
         </header>
 
+        {/* PORTADA — solo se muestra si meta.heroImage tiene una ruta */}
+        {meta.heroImage && (
+          <div className="container article-container">
+            <FadeUp>
+              <figure className="article-hero">
+                <img src={meta.heroImage} alt={meta.heroAlt || meta.title} />
+              </figure>
+            </FadeUp>
+          </div>
+        )}
+
         {/* CUERPO */}
         <div className="container article-container">
           <div className="article-prose">
             {children}
           </div>
 
-          {/* CTA final */}
+          {/* CTA final (genérico, sirve para cualquier artículo) */}
           <FadeUp>
             <div className="article-cta">
-              <h2>¿Tu marca necesita más que un logo?</h2>
+              <h2>{meta.ctaTitle || '¿Hablamos de tu proyecto?'}</h2>
               <p>
-                En Somos Bro construimos identidad de marca completa para empresas
-                en Santiago y todo Chile. Conversemos sobre tu proyecto.
+                {meta.ctaText || 'En Somos Bro construimos marcas que generan autoridad: contenido, branding y diseño web para empresas en Santiago y todo Chile.'}
               </p>
               <div className="row" style={{ marginTop: 24 }}>
                 <Magnetic>

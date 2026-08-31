@@ -9,6 +9,11 @@ const meta = {
   dateISO: '2026-08-31',
   dateLabel: '31 de agosto, 2026',
   readTime: '7 min',
+  // Portada: pon aqui la ruta de la foto y su alt, ej:
+  // heroImage: '/assets/galeria/Modelo-sesion-fotos-somos-bro.jpg',
+  // heroAlt: 'Branding para empresas en Santiago, Chile - Somos Bro',
+  heroImage: '',
+  heroAlt: '',
 };
 
 function Post() {
