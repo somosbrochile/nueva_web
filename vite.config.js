@@ -14,6 +14,7 @@ export default defineConfig({
         blog:      'blog/index.html',
         diagnostico: 'diagnostico-digital.html',
         blogBranding: 'blog/por-que-tu-empresa-necesita-branding.html',
+        blogAds: 'blog/publicidad-pagada-vs-contenido-organico.html',
       }
     }
   }

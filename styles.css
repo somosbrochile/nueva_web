@@ -1619,3 +1619,11 @@ footer { padding: 80px 0 40px; border-top: 1px solid var(--line); }
   .article-hero { margin-top: 24px; border-radius: 14px; }
   .article-figure img { border-radius: 12px; }
 }
+
+/* ----- Blog: tabla comparativa dentro del articulo ----- */
+.article-prose .table-wrap { overflow-x: auto; margin: 32px 0; -webkit-overflow-scrolling: touch; }
+.article-prose table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 460px; }
+.article-prose th, .article-prose td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+.article-prose thead th { color: var(--ink); font-family: var(--font-h); font-weight: 700; font-size: 14px; border-bottom: 1px solid var(--line-2); }
+.article-prose tbody td:first-child { color: var(--ink); white-space: nowrap; }
+.article-prose tbody tr:last-child td { border-bottom: none; }
