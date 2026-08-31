@@ -12,8 +12,8 @@ const meta = {
   // Portada: pon aqui la ruta de la foto y su alt, ej:
   // heroImage: '/assets/galeria/Modelo-sesion-fotos-somos-bro.jpg',
   // heroAlt: 'Branding para empresas en Santiago, Chile - Somos Bro',
-  heroImage: '',
-  heroAlt: '',
+  heroImage: '/assets/blog/branding-para-empresas-santiago.jpg',
+  heroAlt: 'Branding para empresas en Santiago, Chile — identidad de marca por Somos Bro',
 };
 
 function Post() {
