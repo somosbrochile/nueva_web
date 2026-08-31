@@ -12,8 +12,8 @@ const meta = {
   // Portada: pon aqui la ruta de la foto y su alt, ej:
   // heroImage: '/assets/blog/ads-vs-organico-empresas-chile.jpg',
   // heroAlt: 'Publicidad pagada vs contenido organico para empresas en Chile',
-  heroImage: '',
-  heroAlt: '',
+  heroImage: '/assets/blog/publicidad-pagada-vs-contenido-organico-chile.jpg',
+  heroAlt: 'Publicidad pagada vs contenido orgánico para empresas en Chile — Somos Bro',
 };
 
 function Post() {

@@ -9,7 +9,8 @@ export const articles = [
     excerpt: "La publicidad cuesta cada vez más y el contenido orgánico es un activo que compone. Cuándo conviene cada uno para una empresa en Chile.",
     category: "Marketing Digital",
     date: "2026-08-31",
-    readTime: "8 min"
+    readTime: "8 min",
+    image: "/assets/blog/publicidad-pagada-vs-contenido-organico-chile.jpg"
   },
   {
     slug: "por-que-tu-empresa-necesita-branding",
