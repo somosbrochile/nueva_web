@@ -79,30 +79,44 @@ function BlogIndex() {
                     <article style={{
                       border: '1px solid var(--line)',
                       borderRadius: 16,
-                      padding: 32,
                       background: 'var(--bg-2)',
                       transition: 'border-color 200ms',
-                      height: '100%'
+                      height: '100%',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column'
                     }}>
-                      <span style={{
-                        fontSize: 12,
-                        fontWeight: 700,
-                        color: 'var(--orange)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.08em'
-                      }}>
-                        {article.category}
-                      </span>
-                      <h2 style={{ fontSize: 22, marginTop: 12, color: '#fff', lineHeight: 1.3 }}>
-                        {article.title}
-                      </h2>
-                      <p style={{ color: 'var(--ink-2)', marginTop: 12, fontSize: 15, lineHeight: 1.6 }}>
-                        {article.excerpt}
-                      </p>
-                      <div style={{ display: 'flex', gap: 16, marginTop: 24, fontSize: 13, color: 'var(--ink-3)' }}>
-                        <span>{article.date}</span>
-                        <span>·</span>
-                        <span>{article.readTime} lectura</span>
+                      {article.image && (
+                        <div style={{ aspectRatio: '16 / 9', background: 'var(--bg-3)', overflow: 'hidden' }}>
+                          <img
+                            src={article.image}
+                            alt={article.title}
+                            loading="lazy"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                          />
+                        </div>
+                      )}
+                      <div style={{ padding: 28, display: 'flex', flexDirection: 'column', flex: 1 }}>
+                        <span style={{
+                          fontSize: 12,
+                          fontWeight: 700,
+                          color: 'var(--orange)',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.08em'
+                        }}>
+                          {article.category}
+                        </span>
+                        <h2 style={{ fontSize: 22, marginTop: 12, color: '#fff', lineHeight: 1.3 }}>
+                          {article.title}
+                        </h2>
+                        <p style={{ color: 'var(--ink-2)', marginTop: 12, fontSize: 15, lineHeight: 1.6 }}>
+                          {article.excerpt}
+                        </p>
+                        <div style={{ display: 'flex', gap: 16, marginTop: 'auto', paddingTop: 24, fontSize: 13, color: 'var(--ink-3)' }}>
+                          <span>{article.date}</span>
+                          <span>·</span>
+                          <span>{article.readTime} lectura</span>
+                        </div>
                       </div>
                     </article>
                   </a>
