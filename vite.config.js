@@ -12,6 +12,8 @@ export default defineConfig({
         portfolio: 'portfolio.html',
         contact:   'contact.html',
         blog:      'blog/index.html',
+        diagnostico: 'diagnostico-digital.html',
+        blogBranding: 'blog/por-que-tu-empresa-necesita-branding.html',
       }
     }
   }

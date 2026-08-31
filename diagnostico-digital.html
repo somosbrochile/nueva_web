@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diagnóstico Digital para Pymes en Santiago · Somos Bro</title>
+  <meta name="description" content="Revisamos tu sitio web, redes sociales y branding en una sesión de 60 minutos. Diagnóstico digital para pymes en Santiago con reporte escrito. Agenda gratis." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://somosbro.cl/servicios/diagnostico-digital-pymes" />
+
+  <!-- OG -->
+  <meta property="og:title" content="Diagnóstico Digital para Pymes · Somos Bro" />
+  <meta property="og:description" content="Revisamos tu sitio web, redes sociales y branding en 60 minutos. Reporte escrito en 48h. Primera sesión sin costo." />
+  <meta property="og:image" content="https://somosbro.cl/assets/og-somosbro.png" />
+  <meta property="og:url" content="https://somosbro.cl/servicios/diagnostico-digital-pymes" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CL" />
+
+  <!-- Schema: Service -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Diagnóstico Digital para Pymes",
+    "description": "Revisión de sitio web, redes sociales e identidad de marca para pymes y empresas en Chile. Incluye sesión de 60 minutos y reporte escrito en 48 horas.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Somos Bro",
+      "url": "https://somosbro.cl",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santiago",
+        "addressCountry": "CL"
+      }
+    },
+    "areaServed": { "@type": "Country", "name": "Chile" },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "CLP",
+      "description": "Primera sesión de diagnóstico sin costo"
+    },
+    "serviceType": "Consultoría digital",
+    "url": "https://somosbro.cl/servicios/diagnostico-digital-pymes"
+  }
+  </script>
+
+  <!-- Schema: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta el diagnóstico digital para pymes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La primera sesión de diagnóstico es sin costo. Si después quieres implementar los cambios con Somos Bro, el valor se descuenta del primer mes de servicio."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué incluye el diagnóstico digital de Somos Bro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El diagnóstico cubre tres áreas: sitio web (velocidad, SEO, mensaje y CTAs), redes sociales (consistencia, frecuencia y contenido) e identidad de marca (logo, colores, tono). Se entrega un reporte escrito en 48 horas con hallazgos y recomendaciones priorizadas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿El diagnóstico se puede hacer de forma remota?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. La mayoría de las sesiones se realizan por Google Meet. También ofrecemos sesiones presenciales en Santiago para empresas que lo prefieran."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Para qué tipo de empresas es el diagnóstico digital?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Está diseñado para pymes, startups y profesionales independientes en Chile que tienen presencia digital pero no saben si está funcionando. Funciona tanto para empresas que recién empiezan como para negocios con años de operación que quieren mejorar su comunicación."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué pasa después del diagnóstico?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Recibes un reporte escrito con todo lo analizado. Si decides implementar los cambios con nosotros, conversamos una propuesta. Si no, el reporte es tuyo de todas formas."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- =========================================================
+       ESTILOS — copian el sistema visual de somosbro.cl
+       Ajusta las variables CSS para que coincidan 100% con tu sitio
+       ========================================================= -->
+  <style>
+    :root {
+      --color-bg: #0a0a0a;
+      --color-surface: #111111;
+      --color-surface-2: #1a1a1a;
+      --color-text: #f0f0f0;
+      --color-text-muted: #888888;
+      --color-accent: #ffffff;
+      --color-cta: #f0f0f0;
+      --color-cta-hover: #cccccc;
+      --font-main: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      --max-width: 1100px;
+      --radius: 6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-main);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ---- NAV (placeholder — reemplaza con tu nav real) ---- */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 2rem;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
+    .nav-back {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--color-text); }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 2rem 5rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      max-width: 820px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--color-text-muted);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--color-text-muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-badges {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .badge {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.04em;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--color-text);
+      color: var(--color-bg);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      transition: opacity 0.2s, transform 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-ghost {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      padding: 0.9rem 0;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--color-text); border-color: var(--color-text); }
+
+    /* ---- SECCIONES GENERALES ---- */
+    .section {
+      padding: 6rem 2rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+    .section h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      max-width: 580px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 0;
+    }
+
+    /* ---- QUÉ REVISAMOS ---- */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .pillar {
+      background: var(--color-bg);
+      padding: 2.2rem;
+    }
+    .pillar-num {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 1rem;
+    }
+    .pillar h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
+    }
+    .pillar p {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+    .pillar-tags {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+    .pillar-tag {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 100px;
+      color: var(--color-text-muted);
+    }
+
+    /* ---- CÓMO FUNCIONA ---- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+      counter-reset: step;
+    }
+    .step { counter-increment: step; }
+    .step-num {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.08);
+      letter-spacing: -0.05em;
+      margin-bottom: 1rem;
+    }
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .step p {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ---- PARA QUIÉN ---- */
+    .for-who-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .for-who-card {
+      background: var(--color-surface);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .for-who-card .icon { font-size: 1.4rem; margin-bottom: 0.7rem; }
+    .for-who-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .for-who-card p {
+      font-size: 0.83rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ---- CALENDLY / CTA ---- */
+    .cta-section {
+      background: var(--color-surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--color-text-muted);
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    /* Calendly embed placeholder */
+    .calendly-placeholder {
+      background: rgba(255,255,255,0.03);
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 3rem 2rem;
+      margin: 2rem auto 0;
+      max-width: 700px;
+      color: var(--color-text-muted);
+      font-size: 0.88rem;
+    }
+    .calendly-placeholder code {
+      display: block;
+      background: rgba(255,255,255,0.05);
+      padding: 0.8rem 1rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      text-align: left;
+      color: #aaa;
+    }
+
+    /* ---- FAQ ---- */
+    .faq-list { max-width: 720px; }
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 1.6rem 0;
+    }
+    .faq-item:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-item p {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+
+    /* ---- FOOTER NAV ---- */
+    .page-footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+    }
+    .page-footer a { color: var(--color-text-muted); }
+    .page-footer a:hover { color: var(--color-text); }
+
+    @media (max-width: 640px) {
+      .hero { padding: 7rem 1.2rem 4rem; }
+      .section { padding: 4rem 1.2rem; }
+      .cta-section { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV — reemplaza este bloque con el nav real de somosbro.cl
+       ============================================================ -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">Somos Bro</a>
+    <a href="/#servicios" class="nav-back">← Volver a servicios</a>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero">
+    <p class="hero-eyebrow">Somos Bro · Santiago, CL — Diagnóstico Digital</p>
+    <h1>¿Tu empresa se ve<br/><em>como lo que vale?</em></h1>
+    <p class="hero-sub">
+      Revisamos tu sitio web, tus redes sociales y tu identidad de marca en una sola sesión.
+      Te entregamos un reporte con todo lo que está fallando y cómo arreglarlo.
+      Sin tecnicismos. Sin venta disfrazada de consultoría.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">60 min de sesión</span>
+      <span class="badge">Reporte escrito en 48h</span>
+      <span class="badge">Primera sesión sin costo</span>
+      <span class="badge">Presencial o Google Meet</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#agendar" class="btn-primary">Agendar diagnóstico gratuito →</a>
+      <a href="#como-funciona" class="btn-ghost">¿Cómo funciona?</a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ============================================================
+       QUÉ REVISAMOS
+       ============================================================ -->
+  <section class="section" id="que-revisamos">
+    <p class="section-label">01 · El diagnóstico</p>
+    <h2>¿Qué revisamos en el diagnóstico digital?</h2>
+    <p class="section-intro">
+      Una auditoría de presencia digital para pymes en Chile que cubre los tres pilares
+      de la comunicación de tu empresa: dónde te ven, cómo te ven y qué tan claro eres.
+    </p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <p class="pillar-num">01 ·</p>
+        <h3>Sitio web</h3>
+        <p>
+          Revisamos velocidad de carga, estructura SEO, claridad del mensaje, llamados
+          a la acción y si el sitio está diseñado para generar consultas o solo para existir.
+          Identificamos los cambios que más impacto tienen en conversión.
+        </p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">SEO</span>
+          <span class="pillar-tag">Velocidad</span>
+          <span class="pillar-tag">Conversión</span>
+          <span class="pillar-tag">Mensajes</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <p class="pillar-num">02 ·</p>
+        <h3>Redes sociales</h3>
+        <p>
+          Analizamos consistencia visual, frecuencia de publicación, tipo de contenido,
+          tono de comunicación y si tus perfiles generan confianza en el cliente que
+          quieres atraer.
+        </p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Instagram</span>
+          <span class="pillar-tag">LinkedIn</span>
+          <span class="pillar-tag">TikTok</span>
+          <span class="pillar-tag">Consistencia</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <p class="pillar-num">03 ·</p>
+        <h3>Branding e identidad</h3>
+        <p>
+          Evaluamos si tu logo, paleta de colores, tipografía y tono de comunicación
+          están alineados entre sí y si generan confianza en tu cliente ideal o
+          mandan señales mixtas.
+        </p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Logo</span>
+          <span class="pillar-tag">Colores</span>
+          <span class="pillar-tag">Tono</span>
+          <span class="pillar-tag">Coherencia</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:0.88rem; color:var(--color-text-muted);">
+      Al final de la sesión recibes un <strong style="color:var(--color-text)">reporte escrito</strong>
+      con hallazgos concretos y recomendaciones priorizadas por impacto.
+      No una lista genérica — un diagnóstico de tu empresa específica.
+    </p>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ============================================================
+       CÓMO FUNCIONA
+       ============================================================ -->
+  <section class="section" id="como-funciona">
+    <p class="section-label">02 · El proceso</p>
+    <h2>Cómo funciona el diagnóstico digital</h2>
+    <p class="section-intro">
+      Tres pasos. Sin formularios largos, sin propuestas genéricas, sin presión de venta.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Agendas la reunión</h3>
+        <p>
+          Elige el día y hora que más te acomode directamente en el calendario.
+          Sin formularios largos ni esperas de 72 horas.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Sesión de 60 minutos</h3>
+        <p>
+          Revisamos en vivo tu sitio, tus redes y tu identidad visual.
+          Tú explicas tu contexto, nosotros identificamos los problemas reales.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Recibes el reporte</h3>
+        <p>
+          En 48 horas tienes un documento con diagnóstico, prioridades y pasos concretos.
+          El reporte es tuyo aunque no contrates nada.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ============================================================
+       PARA QUIÉN
+       ============================================================ -->
+  <section class="section" id="para-quien">
+    <p class="section-label">03 · Para quién</p>
+    <h2>El diagnóstico está hecho para ti si…</h2>
+
+    <div class="for-who-grid">
+      <div class="for-who-card">
+        <div class="icon">🏢</div>
+        <h4>Tienes una pyme en Chile</h4>
+        <p>Con presencia digital activa pero sin claridad de si está funcionando.</p>
+      </div>
+      <div class="for-who-card">
+        <div class="icon">💼</div>
+        <h4>Eres profesional independiente</h4>
+        <p>Abogado, consultor, médico, coach — alguien que vive de su reputación digital.</p>
+      </div>
+      <div class="for-who-card">
+        <div class="icon">🚀</div>
+        <h4>Estás lanzando o relanzando</h4>
+        <p>Antes de invertir en publicidad quieres saber si tu base está sólida.</p>
+      </div>
+      <div class="for-who-card">
+        <div class="icon">📉</div>
+        <h4>Sientes que algo no está funcionando</h4>
+        <p>Tienes presencia digital pero no genera consultas, ventas ni confianza.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ============================================================
+       CTA / AGENDAMIENTO — CALENDLY
+       ============================================================ -->
+  <section class="section" id="agendar">
+    <div class="cta-section">
+      <h2>Agenda tu diagnóstico gratuito</h2>
+      <p>
+        Cupos disponibles de lunes a viernes. Sesión presencial en Santiago
+        o por Google Meet. Elige el horario que más te acomode.
+      </p>
+
+      
+      <div style="text-align:center;">
+        <a href="/contacto" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;">
+          Agendar mi diagnóstico gratis →
+        </a>
+        <p style="margin-top:16px;font-size:14px;opacity:.7;">
+          Te respondemos en menos de 24 horas para coordinar día y hora.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ============================================================
+       FAQ
+       ============================================================ -->
+  <section class="section" id="preguntas-frecuentes">
+    <p class="section-label">04 · FAQ</p>
+    <h2>Preguntas frecuentes sobre el diagnóstico</h2>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <h3>¿Cuánto cuesta el diagnóstico digital para pymes? <span>+</span></h3>
+        <p>
+          La primera sesión es sin costo. Si después decides implementar los cambios
+          con Somos Bro, el valor del diagnóstico se descuenta del primer mes de servicio.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Qué incluye exactamente el diagnóstico? <span>+</span></h3>
+        <p>
+          Cubre tres áreas: sitio web (SEO, velocidad, conversión y mensajes),
+          redes sociales (consistencia, contenido y comunidad) e identidad de marca
+          (logo, colores, tipografía y tono). Incluye sesión de 60 minutos y reporte
+          escrito entregado en 48 horas.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿El diagnóstico se puede hacer de forma remota? <span>+</span></h3>
+        <p>
+          Sí. La mayoría de las sesiones se hacen por Google Meet.
+          También ofrecemos sesiones presenciales en Santiago para empresas que
+          prefieren el cara a cara.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Para qué tipo de empresas es este servicio? <span>+</span></h3>
+        <p>
+          Está diseñado para pymes, startups y profesionales independientes en Chile
+          que ya tienen presencia digital pero no saben si está funcionando.
+          Si tienes un sitio web y redes sociales activas, el diagnóstico tiene
+          valor para ti.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Qué pasa si no quiero contratar nada después? <span>+</span></h3>
+        <p>
+          El reporte es tuyo de todas formas. No hay presión de venta ni seguimiento
+          no solicitado. Si el diagnóstico ayuda y quieres seguir trabajando con nosotros,
+          bien. Si no, también.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>¿Cuántos cupos hay disponibles por semana? <span>+</span></h3>
+        <p>
+          Tenemos disponibilidad limitada para mantener la calidad de cada diagnóstico.
+          Si no encuentras horario disponible, escríbenos a contacto@somosbro.cl
+          y te buscamos un cupo.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+
+  <!-- ============================================================
+       FOOTER — reemplaza con tu footer real
+       ============================================================ -->
+  <footer class="page-footer">
+    <p>
+      <a href="/">Somos Bro</a> · Agencia de Contenido y Branding en Santiago, Chile ·
+      <a href="mailto:contacto@somosbro.cl">contacto@somosbro.cl</a>
+    </p>
+    <p style="margin-top:0.5rem;">© 2026 Somos Bro · Construimos marcas digitales desde Santiago · Chile y LATAM</p>
+  </footer>
+
+</body>
+</html>

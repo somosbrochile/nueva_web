@@ -194,7 +194,7 @@ function AboutSection() {
             </FadeUp>
             <FadeUp delay={0.15}>
               <div style={{marginTop:32}}>
-                <Magnetic><a className="btn btn-ghost" href="about.html">Conocer más<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
+                <Magnetic><a className="btn btn-ghost" href="/nosotros">Conocer más<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
               </div>
             </FadeUp>
           </div>
@@ -350,6 +350,7 @@ const SERVICES = [
   { num: "03", title: "Creación de sitios web", desc: "Sitios rápidos, claros y hechos para convertir. Diseño y desarrollo con foco en resultados reales para tu negocio.", tags: ["Diseño", "Desarrollo", "UX/UI"] },
   { num: "04", title: "Branding", desc: "Identidad visual completa para marcas que quieren destacar. Sistema de diseño coherente desde el logo hasta cada pieza gráfica.", tags: ["Identidad", "Visual", "Sistema"] },
   { num: "05", title: "Creación de logos", desc: "Diseñamos el símbolo que va a representar tu marca. Proceso claro, opciones reales y entrega de archivos listos para usar.", tags: ["Logo", "Diseño", "Marca"] },
+  { num: "06", title: "Diagnóstico digital para pymes", desc: "Revisamos tu sitio web, redes sociales e identidad de marca en 60 minutos. Reporte escrito en 48h con lo que está fallando y cómo arreglarlo. Primera sesión sin costo.", tags: ["Auditoría", "Diagnóstico", "Pymes"], href: "/servicios/diagnostico-digital-pymes" },
 ];
 
 const PORTFOLIO = [
@@ -511,13 +512,13 @@ function GridPortfolio() {
             <FadeUp delay={0.05}><h2 style={{marginTop:16}}>Trabajo<br/>reciente.</h2></FadeUp>
           </div>
           <FadeUp delay={0.1}>
-            <Magnetic><a className="btn btn-ghost" href="portfolio.html">Ver todo<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
+            <Magnetic><a className="btn btn-ghost" href="/portfolio">Ver todo<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
           </FadeUp>
         </div>
         <div className="portfolio-grid">
           {PORTFOLIO.map((p, i) => (
             <FadeUp key={i} delay={0.08 + i * 0.07} className="portfolio-card-wrap">
-              <a href="portfolio.html" className="portfolio-card" style={{"--scroll-dur":"8s"}}>
+              <a href="/portfolio" className="portfolio-card" style={{"--scroll-dur":"8s"}}>
                 <div className="portfolio-card-thumb">
                   <img src={p.img} alt={p.brand} loading="lazy" className="portfolio-card-scroll-img" />
                 </div>
@@ -681,7 +682,7 @@ function HomeContactForm() {
       <div className="field"><label>Tu nombre</label><input name="nombre" type="text" placeholder="Cómo te llamas" required/></div>
       <div className="field"><label>Email</label><input name="email" type="email" placeholder="tu@correo.cl" required/></div>
       <div className="field"><label>Servicio</label>
-        <select name="servicio" defaultValue=""><option value="" disabled>¿Qué buscas?</option><option>Estrategia de contenido</option><option>Producción audiovisual</option><option>Social media</option><option>Diseño web</option><option>Todo el paquete</option></select>
+        <select name="servicio" defaultValue=""><option value="" disabled>¿Qué buscas?</option><option>Diagnóstico digital (gratis)</option><option>Estrategia de contenido</option><option>Producción audiovisual</option><option>Social media</option><option>Diseño web</option><option>Todo el paquete</option></select>
       </div>
       <div className="field"><label>Cuéntanos</label><textarea name="mensaje" placeholder="Cuéntanos dónde estás y a dónde quieres llegar." rows="3"></textarea></div>
 
@@ -769,7 +770,7 @@ function Home() {
 
   return (
     <PageTransition>
-      <Nav active="index.html" />
+      <Nav active="/" />
 
       {/* HERO */}
       <section className="hero">
@@ -778,6 +779,8 @@ function Home() {
         <div className="hero-bg-blob c" />
         <HeroKinetic />
         <div className="container" style={{position:"relative",zIndex:1,width:"100%"}}>
+          {/* H1 semántico para SEO — visualmente oculto, legible por Google */}
+          <h1 className="sr-only">Agencia de contenido y branding en Santiago, Chile · Somos Bro</h1>
           <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:.7,delay:.1}} className="hero-eyebrow">
             <span className="eyebrow">Agencia creativa · Santiago, CL</span>
           </motion.div>
@@ -796,8 +799,8 @@ function Home() {
             animate={{opacity:1,y:0}}
             transition={{duration:.7,delay:1.0}}
           >
-            <Magnetic><a className="btn btn-primary" href="contact.html">Empezar un proyecto<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
-            <Magnetic><a className="btn btn-ghost" href="portfolio.html">Ver el trabajo</a></Magnetic>
+            <Magnetic><a className="btn btn-primary" href="/contacto">Empezar un proyecto<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
+            <Magnetic><a className="btn btn-ghost" href="/portfolio">Ver el trabajo</a></Magnetic>
           </motion.div>
           <motion.div
             className="hero-meta"
@@ -805,7 +808,7 @@ function Home() {
           >
             <div className="hero-meta-item">
               <span className="hero-meta-label">Para</span>
-              <span className="hero-meta-value">PYMES, startups y marcas que recién despegan en Chile y LATAM.</span>
+              <span className="hero-meta-value">Pymes, startups y empresas en Chile que quieren comunicar mejor y crecer.</span>
             </div>
             <div className="hero-meta-item">
               <span className="hero-meta-label">Hablemos</span>
@@ -842,7 +845,7 @@ function Home() {
           <div className="services-grid">
             {SERVICES.map((s, i) => (
               <FadeUp key={s.num} delay={0.1 + i * 0.07}>
-                <a href="services.html" className="service-card">
+                <a href={s.href || "services.html"} className="service-card">
                   <div className="arrow">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
                   </div>
@@ -895,6 +898,31 @@ function Home() {
             <FadeUp delay={0.1}>
               <HomeContactForm />
             </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — AEO + Schema FAQPage */}
+      <section id="preguntas-frecuentes" style={{paddingBottom:80}}>
+        <div className="container">
+          <FadeUp><span className="eyebrow">Preguntas frecuentes</span></FadeUp>
+          <FadeUp delay={0.05}><h2 style={{marginTop:16,marginBottom:48,maxWidth:"24ch"}}>Todo lo que necesitas saber <span className="grad-text">antes de contactarnos.</span></h2></FadeUp>
+          <div style={{maxWidth:720}}>
+            {[
+              { q: "¿Qué incluye el servicio de creación de contenido para empresas?", a: "Incluye estrategia editorial, redacción de textos, producción audiovisual (fotos y video), diseño gráfico para redes sociales y planificación mensual de publicaciones. Trabajamos con un calendario de contenido aprobado por ti antes de publicar nada." },
+              { q: "¿Cuánto cuesta contratar una agencia de contenido en Santiago?", a: "Depende del volumen y los canales. Trabajamos por proyecto y con planes mensuales. Agenda una llamada gratuita y te damos una propuesta a medida en 48 horas." },
+              { q: "¿Trabajan solo en Santiago o también con empresas en regiones?", a: "Tenemos base en Santiago pero trabajamos con clientes en toda Chile y LATAM de forma remota. Para proyectos de producción audiovisual en regiones lo evaluamos caso a caso." },
+              { q: "¿Cuánto demora tener listo un sitio web?", a: "Entre 3 y 5 semanas desde que aprobamos el brief. Depende de la cantidad de páginas y la disponibilidad del cliente para entregar textos e imágenes." },
+              { q: "¿Qué es el diagnóstico digital para pymes?", a: "Es una revisión de 60 minutos de tu sitio web, redes sociales e identidad de marca. Recibes un reporte escrito en 48 horas con los problemas encontrados y los pasos concretos para arreglarlos. La primera sesión es sin costo." },
+              { q: "¿Qué diferencia a Somos Bro de otras agencias?", a: "Combinamos estrategia, producción y diseño en un solo equipo. No subcontratamos piezas clave ni trabajamos con plantillas genéricas. Cada proyecto parte desde la identidad real de tu marca." },
+            ].map((item, i) => (
+              <FadeUp key={i} delay={0.04 * i}>
+                <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",padding:"1.4rem 0"}}>
+                  <h3 style={{fontSize:"1rem",fontWeight:600,marginBottom:"0.5rem"}}>{item.q}</h3>
+                  <p style={{fontSize:"0.9rem",color:"var(--ink-2)",lineHeight:1.7}}>{item.a}</p>
+                </div>
+              </FadeUp>
+            ))}
           </div>
         </div>
       </section>

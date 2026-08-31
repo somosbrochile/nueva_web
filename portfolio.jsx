@@ -308,7 +308,7 @@ function Portfolio() {
 
   return (
     <PageTransition>
-      <Nav active="portfolio.html" />
+      <Nav active="/portfolio" />
       <header className="page-head">
         <div className="blob" style={{background:"radial-gradient(circle,#206ea6,transparent 70%)"}} />
         <PortfolioIcons />

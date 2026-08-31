@@ -1,5 +1,24 @@
 {
   "buildCommand": "vite build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "trailingSlash": false,
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/nosotros", "destination": "/about.html" },
+    { "source": "/servicios", "destination": "/services.html" },
+    { "source": "/portfolio", "destination": "/portfolio.html" },
+    { "source": "/contacto", "destination": "/contact.html" },
+    { "source": "/servicios/diagnostico-digital-pymes", "destination": "/diagnostico-digital.html" },
+    { "source": "/blog/:slug", "destination": "/blog/:slug.html" }
+  ],
+  "redirects": [
+    { "source": "/about.html", "destination": "/nosotros", "permanent": true },
+    { "source": "/services.html", "destination": "/servicios", "permanent": true },
+    { "source": "/portfolio.html", "destination": "/portfolio", "permanent": true },
+    { "source": "/contact.html", "destination": "/contacto", "permanent": true },
+    { "source": "/diagnostico-digital.html", "destination": "/servicios/diagnostico-digital-pymes", "permanent": true },
+    { "source": "/nosotros.html", "destination": "/nosotros", "permanent": true },
+    { "source": "/servicios.html", "destination": "/servicios", "permanent": true }
+  ]
 }

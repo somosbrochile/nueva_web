@@ -77,7 +77,7 @@ const SERVICES = [
 function Services() {
   return (
     <PageTransition>
-      <Nav active="services.html" />
+      <Nav active="/servicios" />
       <header className="page-head">
         <div className="blob" style={{background:"radial-gradient(circle,#d00a5f,transparent 70%)"}} />
         <div className="container">
@@ -126,7 +126,7 @@ function Services() {
                 <p style={{marginTop:12,maxWidth:"42ch"}}>Te respondemos en menos de 24h con propuesta y costos.</p>
               </div>
               <Magnetic>
-                <a className="btn btn-primary" href="contact.html">Cotizar
+                <a className="btn btn-primary" href="/contacto">Cotizar
                   <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
                 </a>
               </Magnetic>

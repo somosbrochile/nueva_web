@@ -87,7 +87,7 @@ function ContactForm() {
 function Contact() {
   return (
     <PageTransition>
-      <Nav active="contact.html" />
+      <Nav active="/contacto" />
       <header className="page-head">
         <div className="blob" style={{background:"radial-gradient(circle,#f8ac08,transparent 70%)"}} />
         <div className="container">

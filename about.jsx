@@ -302,7 +302,7 @@ function ValueCard({ t, d, gradFrom, gradTo, glowColor, delay }) {
 function About() {
   return (
     <PageTransition>
-      <Nav active="about.html" />
+      <Nav active="/nosotros" />
       <header className="page-head">
         <div className="blob" style={{background:"radial-gradient(circle,#e47204,transparent 70%)"}} />
         <div className="container">

@@ -13,7 +13,7 @@ function BlogIndex() {
 
   return (
     <PageTransition>
-      <Nav active="blog/index.html" />
+      <Nav active="/blog" />
 
       <header className="page-head">
         <div className="container">
@@ -72,7 +72,7 @@ function BlogIndex() {
               {filtered.map((article, i) => (
                 <FadeUp key={article.slug} delay={i * 0.06}>
                   <a
-                    href={`/blog/${article.slug}.html`}
+                    href={`/blog/${article.slug}`}
                     style={{ textDecoration: 'none', display: 'block', height: '100%' }}
                   >
                     <article style={{

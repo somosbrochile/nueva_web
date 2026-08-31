@@ -2,15 +2,14 @@
 // Agregar cada artículo nuevo aquí en orden cronológico inverso (más reciente primero)
 
 export const articles = [
-  // Ejemplo (descomentar cuando se publique el primer artículo):
-  // {
-  //   slug: "contenido-para-empresas-santiago",
-  //   title: "Cómo crear contenido para empresas en Santiago",
-  //   excerpt: "Guía práctica para empresas en la Región Metropolitana que quieren generar contenido estratégico.",
-  //   category: "Contenido",
-  //   date: "2026-06-02",
-  //   readTime: "6 min"
-  // }
+  {
+    slug: "por-que-tu-empresa-necesita-branding",
+    title: "Por qué tu empresa necesita branding (más allá del logo)",
+    excerpt: "El branding no es tu logo: es todo lo que tu empresa significa y por qué te eligen. Qué incluye de verdad y por dónde empezar en Chile.",
+    category: "Branding",
+    date: "2026-08-31",
+    readTime: "7 min"
+  }
 ];
 
 export const categories = [
