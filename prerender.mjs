@@ -14,7 +14,8 @@
 import { createServer } from 'node:http'
 import { readFile, writeFile, stat } from 'node:fs/promises'
 import { join, extname, resolve } from 'node:path'
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
+import chromium from '@sparticuz/chromium'
 
 const DIST = resolve('dist')
 const PORT = 4321
@@ -77,12 +78,19 @@ function startServer() {
 
 async function main() {
   const server = await startServer()
+
+  // Chromium: por defecto usa el binario empaquetado de @sparticuz/chromium
+  // (funciona en el build de Vercel sin descargar nada ni depender de librerías
+  // del sistema). PUPPETEER_EXECUTABLE_PATH permite forzar otro binario.
+  const override = process.env.PUPPETEER_EXECUTABLE_PATH
+  const executablePath = override || (await chromium.executablePath())
+  const args = override
+    ? ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    : chromium.args
   const browser = await puppeteer.launch({
     headless: true,
-    // executablePath permite usar un Chromium ya instalado (verificación local);
-    // en Vercel queda vacío y usa el Chromium que trae puppeteer.
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+    executablePath,
+    args,
   })
 
   let ok = 0
