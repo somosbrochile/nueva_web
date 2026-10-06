@@ -9,8 +9,8 @@ import './diagnostico.css'
    Mientras estén vacíos, los botones llevan a /contacto.
    ------------------------------------------------------------------ */
 const PAY_LINKS = {
-  esencial: '',
-  auditoria: '',
+  esencial: 'https://mpago.la/1pz9yB3',
+  auditoria: 'https://mpago.la/1iNgv2b',
 };
 const payHref = (plan) => PAY_LINKS[plan] || '/contacto';
 const isExternal = (plan) => Boolean(PAY_LINKS[plan]);
@@ -27,6 +27,7 @@ const PLANS = [
     id: 'esencial',
     name: 'Diagnóstico Esencial',
     price: '$89.000',
+    total: '$105.910',
     for: 'Para emprendimientos y negocios locales que quieren saber qué están haciendo mal y poner orden.',
     items: [
       'Sesión de 45 minutos',
@@ -40,6 +41,7 @@ const PLANS = [
     id: 'auditoria',
     name: 'Auditoría Estratégica',
     price: '$220.000',
+    total: '$261.800',
     featured: true,
     tag: 'Para empresas con tráfico',
     for: 'Para empresas establecidas, e-commerce y negocios B2B que ya tienen tráfico, pero no están vendiendo lo suficiente.',
@@ -57,7 +59,7 @@ const PLANS = [
 
 const STEPS = [
   { num: "01", title: "Eliges tu plan y pagas",
-    desc: "Contratas el diagnóstico que necesitas y te contactamos para agendar el día y la hora de la sesión." },
+    desc: "Pagas en línea con Mercado Pago (tarjeta o hasta 12 cuotas) y te contactamos en menos de 24 horas para agendar el día y la hora de la sesión." },
   { num: "02", title: "Sesión en vivo",
     desc: "Revisamos contigo tu sitio, tus redes y tu marca. Tú explicas tu contexto, nosotros identificamos los problemas reales. Presencial en Santiago o por Google Meet." },
   { num: "03", title: "Recibes el reporte",
@@ -97,6 +99,7 @@ function PlanCard({ plan }) {
         <span className="dx-plan-amount">{plan.price}</span>
         <span className="dx-plan-iva">+ IVA</span>
       </div>
+      <p className="dx-plan-total">Total: {plan.total} IVA incluido</p>
       <ul className="dx-plan-list">
         {plan.items.map((it) => <li key={it}><Check />{it}</li>)}
       </ul>
@@ -107,6 +110,7 @@ function PlanCard({ plan }) {
             {plan.cta} <Arrow />
           </a>
         </Magnetic>
+        <p className="dx-plan-secure">Pago seguro con Mercado Pago · Hasta 12 cuotas</p>
       </div>
     </div>
   );
