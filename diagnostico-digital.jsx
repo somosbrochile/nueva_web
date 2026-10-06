@@ -160,7 +160,7 @@ function Diagnostico() {
         <div className="container">
           <div className="dx-section-head">
             <FadeUp><span className="eyebrow">03 · Para quién</span></FadeUp>
-            <FadeUp delay={0.05}><h2>Está hecho para ti <span className="grad-text">si…</span></h2></FadeUp>
+            <FadeUp delay={0.05}><h2>Está hecho para <span style={{whiteSpace:"nowrap"}}>ti <span className="grad-text">si…</span></span></h2></FadeUp>
           </div>
 
           <div className="dx-who">
