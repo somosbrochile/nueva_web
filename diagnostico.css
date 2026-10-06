@@ -70,3 +70,9 @@
 .dx-faq details[open] .dx-plus { transform: rotate(45deg); background: var(--orange); border-color: var(--orange); }
 .dx-faq details p { padding: 0 64px 28px 0; font-size: 16px; max-width: 70ch; }
 @media (max-width: 768px) { .dx-faq summary { cursor: pointer; } .dx-faq details p { padding-right: 0; } }
+
+/* Interlineado: el global (.92) hace que las líneas choquen en títulos de dos líneas */
+.dx-head h1 { line-height: 1.02; }
+.dx-section-head h2, .dx-cta h2 { line-height: 1.04; }
+/* Más aire para los descendentes (g) del degradado */
+.dx-head .grad-text, .dx-section-head .grad-text, .dx-cta .grad-text { padding-bottom: .2em; margin-bottom: -.2em; }

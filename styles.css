@@ -88,6 +88,11 @@ p  { color: var(--ink-2); line-height: 1.6; }
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
   display: inline-block;
+  /* con line-height < 1 la caja del fondo termina antes de los descendentes (g, p, q)
+     y background-clip los corta; el padding extiende el fondo y el margen negativo
+     compensa para no mover el layout */
+  padding-bottom: .15em;
+  margin-bottom: -.15em;
 }
 
 /* ----- layout ----- */

@@ -98,7 +98,7 @@ function Diagnostico() {
         <div className="container">
           <div className="dx-section-head">
             <FadeUp><span className="eyebrow">01 · El diagnóstico</span></FadeUp>
-            <FadeUp delay={0.05}><h2>¿Qué revisamos en el <span className="grad-text">diagnóstico digital?</span></h2></FadeUp>
+            <FadeUp delay={0.05}><h2>¿Qué revisamos en&nbsp;el <span className="grad-text">diagnóstico digital?</span></h2></FadeUp>
             <FadeUp delay={0.1}>
               <p>
                 Una auditoría de presencia digital para pymes en Chile que cubre los tres pilares
