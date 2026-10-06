@@ -1,0 +1,72 @@
+/* ============================================================
+   Diagnóstico digital para pymes — estilos propios de la página.
+   Usa los tokens de styles.css (colores, fuentes, curvas).
+   ============================================================ */
+
+.dx-head h1 { max-width: none; }
+.dx-head .dx-sub { max-width: 58ch; font-size: 20px; margin-top: 32px; color: var(--ink-2); }
+.dx-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+.dx-badge {
+  font-size: 13px; padding: 8px 14px;
+  border: 1px solid var(--line-2); border-radius: 999px;
+  color: var(--ink-2); background: rgba(255,255,255,.03);
+}
+.dx-head .row { margin-top: 44px; }
+
+.dx-section-head { max-width: 760px; margin-bottom: 64px; }
+.dx-section-head h2 { font-size: clamp(36px, 5vw, 72px); margin-top: 24px; }
+.dx-section-head p { font-size: 18px; margin-top: 24px; max-width: 58ch; }
+
+/* 3 pilares */
+.dx-pillars {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 24px; overflow: hidden;
+}
+.dx-pillars > * { display: flex; }
+.dx-pillars .service-card { padding: 48px 36px; }
+@media (max-width: 1024px) { .dx-pillars { grid-template-columns: 1fr; } }
+.dx-note { margin-top: 32px; font-size: 16px; max-width: 70ch; }
+.dx-note strong { color: var(--ink); }
+
+/* Para quién */
+.dx-who { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 1024px) { .dx-who { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px)  { .dx-who { grid-template-columns: 1fr; } }
+.dx-who-card { padding: 32px 28px; height: 100%; display: flex; flex-direction: column; gap: 14px; }
+.dx-who-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dx-who-card h3 { font-size: 20px; line-height: 1.15; letter-spacing: -.02em; }
+.dx-who-card p { font-size: 15px; }
+
+/* CTA */
+.dx-cta { padding: 64px 56px; position: relative; overflow: hidden; }
+.dx-cta h2 { font-size: clamp(32px, 4vw, 56px); max-width: 16ch; }
+.dx-cta p { margin-top: 16px; max-width: 50ch; font-size: 17px; }
+.dx-cta .row { margin-top: 32px; }
+.dx-cta .dx-cta-glow {
+  position: absolute; width: 420px; height: 420px; border-radius: 50%;
+  right: -120px; bottom: -160px; filter: blur(110px); opacity: .45; pointer-events: none;
+  background: radial-gradient(circle, var(--magenta), transparent 70%);
+}
+@media (max-width: 768px) { .dx-cta { padding: 44px 24px; } }
+
+/* FAQ */
+.dx-faq { border-top: 1px solid var(--line); max-width: 960px; }
+.dx-faq details { border-bottom: 1px solid var(--line); }
+.dx-faq summary {
+  list-style: none; cursor: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  padding: 28px 0;
+  font-family: var(--font-h); font-weight: 700; font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: -.02em; color: var(--ink);
+}
+.dx-faq summary::-webkit-details-marker { display: none; }
+.dx-faq .dx-plus {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 999px;
+  border: 1px solid var(--line-2);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 250ms var(--ease-out), background 250ms, border-color 250ms;
+}
+.dx-faq details[open] .dx-plus { transform: rotate(45deg); background: var(--orange); border-color: var(--orange); }
+.dx-faq details p { padding: 0 64px 28px 0; font-size: 16px; max-width: 70ch; }
+@media (max-width: 768px) { .dx-faq summary { cursor: pointer; } .dx-faq details p { padding-right: 0; } }
