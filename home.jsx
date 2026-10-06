@@ -350,7 +350,7 @@ const SERVICES = [
   { num: "03", title: "Creación de sitios web", desc: "Sitios rápidos, claros y hechos para convertir. Diseño y desarrollo con foco en resultados reales para tu negocio.", tags: ["Diseño", "Desarrollo", "UX/UI"] },
   { num: "04", title: "Branding", desc: "Identidad visual completa para marcas que quieren destacar. Sistema de diseño coherente desde el logo hasta cada pieza gráfica.", tags: ["Identidad", "Visual", "Sistema"] },
   { num: "05", title: "Creación de logos", desc: "Diseñamos el símbolo que va a representar tu marca. Proceso claro, opciones reales y entrega de archivos listos para usar.", tags: ["Logo", "Diseño", "Marca"] },
-  { num: "06", title: "Diagnóstico digital para pymes", desc: "Revisamos tu sitio web, redes sociales e identidad de marca en 60 minutos. Reporte escrito en 48h con lo que está fallando y cómo arreglarlo. Primera sesión sin costo.", tags: ["Auditoría", "Diagnóstico", "Pymes"], href: "/servicios/diagnostico-digital-pymes" },
+  { num: "06", title: "Diagnóstico digital para pymes", desc: "Revisamos tu sitio web, redes sociales e identidad de marca, y te entregamos un reporte con lo que está fallando y cómo arreglarlo. Desde $89.000 + IVA.", tags: ["Auditoría", "Diagnóstico", "Pymes"], href: "/servicios/diagnostico-digital-pymes" },
 ];
 
 const PORTFOLIO = [
@@ -682,7 +682,7 @@ function HomeContactForm() {
       <div className="field"><label>Tu nombre</label><input name="nombre" type="text" placeholder="Cómo te llamas" required/></div>
       <div className="field"><label>Email</label><input name="email" type="email" placeholder="tu@correo.cl" required/></div>
       <div className="field"><label>Servicio</label>
-        <select name="servicio" defaultValue=""><option value="" disabled>¿Qué buscas?</option><option>Diagnóstico digital (gratis)</option><option>Estrategia de contenido</option><option>Producción audiovisual</option><option>Social media</option><option>Diseño web</option><option>Todo el paquete</option></select>
+        <select name="servicio" defaultValue=""><option value="" disabled>¿Qué buscas?</option><option>Diagnóstico digital</option><option>Estrategia de contenido</option><option>Producción audiovisual</option><option>Social media</option><option>Diseño web</option><option>Todo el paquete</option></select>
       </div>
       <div className="field"><label>Cuéntanos</label><textarea name="mensaje" placeholder="Cuéntanos dónde estás y a dónde quieres llegar." rows="3"></textarea></div>
 
@@ -913,7 +913,7 @@ function Home() {
               { q: "¿Cuánto cuesta contratar una agencia de contenido en Santiago?", a: "Depende del volumen y los canales. Trabajamos por proyecto y con planes mensuales. Agenda una llamada gratuita y te damos una propuesta a medida en 48 horas." },
               { q: "¿Trabajan solo en Santiago o también con empresas en regiones?", a: "Tenemos base en Santiago pero trabajamos con clientes en toda Chile y LATAM de forma remota. Para proyectos de producción audiovisual en regiones lo evaluamos caso a caso." },
               { q: "¿Cuánto demora tener listo un sitio web?", a: "Entre 3 y 5 semanas desde que aprobamos el brief. Depende de la cantidad de páginas y la disponibilidad del cliente para entregar textos e imágenes." },
-              { q: "¿Qué es el diagnóstico digital para pymes?", a: "Es una revisión de 60 minutos de tu sitio web, redes sociales e identidad de marca. Recibes un reporte escrito en 48 horas con los problemas encontrados y los pasos concretos para arreglarlos. La primera sesión es sin costo." },
+              { q: "¿Qué es el diagnóstico digital para pymes?", a: "Es una revisión de tu sitio web, redes sociales e identidad de marca, con un reporte escrito de los problemas encontrados y los pasos concretos para arreglarlos. Tiene dos niveles: Diagnóstico Esencial ($89.000 + IVA) y Auditoría Estratégica ($220.000 + IVA), y se abona si contratas un proyecto con nosotros dentro de 15 días." },
               { q: "¿Qué diferencia a Somos Bro de otras agencias?", a: "Combinamos estrategia, producción y diseño en un solo equipo. No subcontratamos piezas clave ni trabajamos con plantillas genéricas. Cada proyecto parte desde la identidad real de tu marca." },
             ].map((item, i) => (
               <FadeUp key={i} delay={0.04 * i}>

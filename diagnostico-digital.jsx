@@ -4,29 +4,64 @@ import { CustomCursor, Magnetic, FadeUp, Nav, Footer, PageTransition } from './s
 import './styles.css'
 import './diagnostico.css'
 
+/* ------------------------------------------------------------------
+   LINKS DE PAGO: pega aquí el link de pago de cada plan (Flow, Mercado Pago, etc.).
+   Mientras estén vacíos, los botones llevan a /contacto.
+   ------------------------------------------------------------------ */
+const PAY_LINKS = {
+  esencial: '',
+  auditoria: '',
+};
+const payHref = (plan) => PAY_LINKS[plan] || '/contacto';
+const isExternal = (plan) => Boolean(PAY_LINKS[plan]);
+
 const Arrow = () => (
   <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
 );
+const Check = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+);
 
-const PILLARS = [
-  { num: "01", title: "Sitio web",
-    desc: "Revisamos velocidad de carga, estructura SEO, claridad del mensaje, llamados a la acción y si el sitio está diseñado para generar consultas o solo para existir. Identificamos los cambios que más impacto tienen en conversión.",
-    tags: ["SEO", "Velocidad", "Conversión", "Mensajes"] },
-  { num: "02", title: "Redes sociales",
-    desc: "Analizamos consistencia visual, frecuencia de publicación, tipo de contenido, tono de comunicación y si tus perfiles generan confianza en el cliente que quieres atraer.",
-    tags: ["Instagram", "LinkedIn", "TikTok", "Consistencia"] },
-  { num: "03", title: "Branding e identidad",
-    desc: "Evaluamos si tu logo, paleta de colores, tipografía y tono de comunicación están alineados entre sí y si generan confianza en tu cliente ideal o mandan señales mixtas.",
-    tags: ["Logo", "Colores", "Tono", "Coherencia"] },
+const PLANS = [
+  {
+    id: 'esencial',
+    name: 'Diagnóstico Esencial',
+    price: '$89.000',
+    for: 'Para emprendimientos y negocios locales que quieren saber qué están haciendo mal y poner orden.',
+    items: [
+      'Sesión de 45 minutos',
+      'Revisión de usabilidad web (UX) y SEO básico',
+      'Auditoría visual de tus redes sociales (Instagram y LinkedIn)',
+      'Reporte PDF en 48 horas con "victorias rápidas": lo que puedes arreglar hoy',
+    ],
+    cta: 'Contratar Diagnóstico Esencial',
+  },
+  {
+    id: 'auditoria',
+    name: 'Auditoría Estratégica',
+    price: '$220.000',
+    featured: true,
+    tag: 'Para empresas con tráfico',
+    for: 'Para empresas establecidas, e-commerce y negocios B2B que ya tienen tráfico, pero no están vendiendo lo suficiente.',
+    items: [
+      'Sesión de 60 a 90 minutos con los socios de Somos Bro',
+      'Análisis de tu embudo de ventas y de la conversión de tu sitio',
+      'Benchmark de 2 competidores',
+      'Auditoría de branding y coherencia de marca',
+      'Revisión de tus campañas en Meta Ads y Google Ads, si las tienes',
+      'Reporte PDF en 5 días hábiles con un plan de acción a 30 y 60 días',
+    ],
+    cta: 'Contratar Auditoría Estratégica',
+  },
 ];
 
 const STEPS = [
-  { num: "01", title: "Agendas la reunión",
-    desc: "Elige el día y la hora que más te acomode. Sin formularios largos ni esperas de 72 horas." },
-  { num: "02", title: "Sesión de 60 minutos",
-    desc: "Revisamos en vivo tu sitio, tus redes y tu identidad visual. Tú explicas tu contexto, nosotros identificamos los problemas reales." },
+  { num: "01", title: "Eliges tu plan y pagas",
+    desc: "Contratas el diagnóstico que necesitas y te contactamos para agendar el día y la hora de la sesión." },
+  { num: "02", title: "Sesión en vivo",
+    desc: "Revisamos contigo tu sitio, tus redes y tu marca. Tú explicas tu contexto, nosotros identificamos los problemas reales. Presencial en Santiago o por Google Meet." },
   { num: "03", title: "Recibes el reporte",
-    desc: "En 48 horas tienes un documento con diagnóstico, prioridades y pasos concretos. El reporte es tuyo aunque no contrates nada." },
+    desc: "Un documento con hallazgos, prioridades y pasos concretos: en 48 horas el Esencial y en 5 días hábiles la Auditoría Estratégica." },
 ];
 
 const WHO = [
@@ -37,19 +72,45 @@ const WHO = [
 ];
 
 const FAQ = [
-  { q: "¿Cuánto cuesta el diagnóstico digital para pymes?",
-    a: "La primera sesión es sin costo. Si después decides implementar los cambios con Somos Bro, conversamos una propuesta a la medida de lo que necesitas." },
-  { q: "¿Qué incluye exactamente el diagnóstico?",
-    a: "Cubre tres áreas: sitio web (SEO, velocidad, conversión y mensajes), redes sociales (consistencia, contenido y comunidad) e identidad de marca (logo, colores, tipografía y tono). Incluye una sesión de 60 minutos y un reporte escrito entregado en 48 horas." },
+  { q: "¿Cuánto cuesta el diagnóstico digital?",
+    a: "El Diagnóstico Esencial cuesta $89.000 + IVA y la Auditoría Estratégica, $220.000 + IVA. Si dentro de los 15 días siguientes contratas con nosotros un proyecto de desarrollo web o branding, el valor del diagnóstico se abona a ese proyecto." },
+  { q: "¿Qué diferencia hay entre el Diagnóstico Esencial y la Auditoría Estratégica?",
+    a: "El Esencial es una revisión rápida para ordenar lo básico: usabilidad, SEO y redes, con una lista de arreglos inmediatos. La Auditoría Estratégica es para empresas que ya tienen tráfico: analiza tu embudo de ventas, tu competencia, tu marca y tus campañas, y termina en un plan de acción a 30 y 60 días." },
+  { q: "¿Por qué el diagnóstico no es gratis?",
+    a: "Porque un diagnóstico serio toma horas de trabajo antes y después de la sesión. Cobrarlo nos permite dedicarle ese tiempo de verdad y entregarte algo que sirva, no una venta disfrazada de consultoría. Y si después trabajamos juntos, se abona a tu proyecto." },
+  { q: "¿Qué necesito tener listo para la Auditoría Estratégica?",
+    a: "Si tienes campañas en Meta Ads o Google Ads, o Google Analytics, necesitamos acceso de lectura a esas cuentas para revisarlas. Te explicamos cómo darlo; toma un par de minutos y no nos permite modificar nada." },
   { q: "¿El diagnóstico se puede hacer de forma remota?",
-    a: "Sí. La mayoría de las sesiones se hacen por Google Meet. También ofrecemos sesiones presenciales en Santiago para empresas que prefieren el cara a cara." },
-  { q: "¿Para qué tipo de empresas es este servicio?",
-    a: "Está diseñado para pymes, startups y profesionales independientes en Chile que ya tienen presencia digital, pero no saben si está funcionando. Si tienes un sitio web y redes sociales activas, el diagnóstico tiene valor para ti." },
+    a: "Sí. La mayoría de las sesiones se hacen por Google Meet. También ofrecemos sesiones presenciales en Santiago para quienes prefieren el cara a cara." },
   { q: "¿Qué pasa si no quiero contratar nada después?",
     a: "El reporte es tuyo de todas formas. No hay presión de venta ni seguimiento no solicitado. Si el diagnóstico te ayuda y quieres seguir trabajando con nosotros, bien. Si no, también." },
-  { q: "¿Cuántos cupos hay disponibles por semana?",
-    a: "Tenemos disponibilidad limitada para mantener la calidad de cada diagnóstico. Si no encuentras horario, escríbenos a contacto@somosbro.cl y te buscamos un cupo." },
 ];
+
+function PlanCard({ plan }) {
+  const ext = isExternal(plan.id);
+  return (
+    <div className={"glass dx-plan" + (plan.featured ? " is-featured" : "")} id={"plan-" + plan.id}>
+      {plan.tag && <span className="dx-plan-tag">{plan.tag}</span>}
+      <h3>{plan.name}</h3>
+      <p className="dx-plan-for">{plan.for}</p>
+      <div className="dx-plan-price">
+        <span className="dx-plan-amount">{plan.price}</span>
+        <span className="dx-plan-iva">+ IVA</span>
+      </div>
+      <ul className="dx-plan-list">
+        {plan.items.map((it) => <li key={it}><Check />{it}</li>)}
+      </ul>
+      <div className="dx-plan-cta">
+        <Magnetic>
+          <a className={"btn " + (plan.featured ? "btn-primary" : "btn-ghost")} href={payHref(plan.id)}
+             {...(ext ? { target: "_blank", rel: "noreferrer" } : {})}>
+            {plan.cta} <Arrow />
+          </a>
+        </Magnetic>
+      </div>
+    </div>
+  );
+}
 
 function Diagnostico() {
   return (
@@ -67,23 +128,23 @@ function Diagnostico() {
           </FadeUp>
           <FadeUp delay={0.12}>
             <p className="dx-sub">
-              Revisamos tu sitio web, tus redes sociales y tu identidad de marca en una sola sesión.
-              Te entregamos un reporte con todo lo que está fallando y cómo arreglarlo.
+              Revisamos tu sitio web, tus redes sociales y tu identidad de marca, y te entregamos
+              un reporte con todo lo que está fallando y cómo arreglarlo.
               Sin tecnicismos. Sin venta disfrazada de consultoría.
             </p>
           </FadeUp>
           <FadeUp delay={0.18}>
             <div className="dx-badges">
-              <span className="dx-badge">60 min de sesión</span>
-              <span className="dx-badge">Reporte escrito en 48h</span>
-              <span className="dx-badge">Primera sesión sin costo</span>
+              <span className="dx-badge">Desde $89.000 + IVA</span>
+              <span className="dx-badge">Reporte escrito en PDF</span>
+              <span className="dx-badge">Se abona si contratas en 15 días</span>
               <span className="dx-badge">Presencial o Google Meet</span>
             </div>
           </FadeUp>
           <FadeUp delay={0.24}>
             <div className="row">
               <Magnetic>
-                <a className="btn btn-primary" href="/contacto">Agendar diagnóstico gratuito <Arrow /></a>
+                <a className="btn btn-primary" href="#planes">Ver planes <Arrow /></a>
               </Magnetic>
               <Magnetic>
                 <a className="btn btn-ghost" href="#como-funciona">¿Cómo funciona?</a>
@@ -93,40 +154,30 @@ function Diagnostico() {
         </div>
       </header>
 
-      {/* QUÉ REVISAMOS */}
-      <section id="que-revisamos">
+      {/* PLANES */}
+      <section id="planes">
         <div className="container">
           <div className="dx-section-head">
-            <FadeUp><span className="eyebrow">01 · El diagnóstico</span></FadeUp>
-            <FadeUp delay={0.05}><h2>¿Qué revisamos en&nbsp;el <span className="grad-text">diagnóstico digital?</span></h2></FadeUp>
+            <FadeUp><span className="eyebrow">01 · Los planes</span></FadeUp>
+            <FadeUp delay={0.05}><h2>Dos niveles de <span className="grad-text">diagnóstico</span></h2></FadeUp>
             <FadeUp delay={0.1}>
               <p>
-                Una auditoría de presencia digital para pymes en Chile que cubre los tres pilares
-                de la comunicación de tu empresa: dónde te ven, cómo te ven y qué tan claro eres.
+                Una auditoría de presencia digital para empresas en Chile. Elige según la etapa de tu
+                negocio: ordenar lo básico o encontrar por qué tu tráfico no se convierte en ventas.
               </p>
             </FadeUp>
           </div>
 
-          <div className="dx-pillars">
-            {PILLARS.map((p, i) => (
-              <FadeUp key={p.num} delay={i * 0.06}>
-                <div className="service-card">
-                  <span className="service-num">{p.num}</span>
-                  <h3>{p.title}</h3>
-                  <p>{p.desc}</p>
-                  <div className="service-tags">
-                    {p.tags.map((t) => <span key={t} className="service-tag">{t}</span>)}
-                  </div>
-                </div>
-              </FadeUp>
+          <div className="dx-plans">
+            {PLANS.map((p, i) => (
+              <FadeUp key={p.id} delay={i * 0.08}><PlanCard plan={p} /></FadeUp>
             ))}
           </div>
 
           <FadeUp>
             <p className="dx-note">
-              Al final recibes un <strong>reporte escrito</strong> con hallazgos concretos y
-              recomendaciones priorizadas por impacto. No una lista genérica: un diagnóstico de
-              tu empresa específica.
+              <strong>El diagnóstico se abona a tu proyecto:</strong> si dentro de los 15 días siguientes
+              contratas con nosotros desarrollo web o branding, descontamos su valor.
             </p>
           </FadeUp>
         </div>
@@ -183,14 +234,17 @@ function Diagnostico() {
           <FadeUp>
             <div className="glass dx-cta">
               <div className="dx-cta-glow" />
-              <h2>Agenda tu diagnóstico <span className="grad-text">gratuito</span></h2>
+              <h2>Elige tu <span className="grad-text">diagnóstico</span></h2>
               <p>
-                Cupos de lunes a viernes. Sesión presencial en Santiago o por Google Meet.
-                Te respondemos en menos de 24 horas para coordinar día y hora.
+                Contratas, te contactamos en menos de 24 horas para agendar y en la sesión
+                revisamos tu caso. Presencial en Santiago o por Google Meet.
               </p>
               <div className="row">
                 <Magnetic>
-                  <a className="btn btn-primary" href="/contacto">Agendar mi diagnóstico <Arrow /></a>
+                  <a className="btn btn-ghost" href={payHref('esencial')} {...(isExternal('esencial') ? { target: "_blank", rel: "noreferrer" } : {})}>Esencial · $89.000 + IVA</a>
+                </Magnetic>
+                <Magnetic>
+                  <a className="btn btn-primary" href={payHref('auditoria')} {...(isExternal('auditoria') ? { target: "_blank", rel: "noreferrer" } : {})}>Auditoría Estratégica · $220.000 + IVA <Arrow /></a>
                 </Magnetic>
               </div>
             </div>

@@ -76,3 +76,26 @@
 .dx-section-head h2, .dx-cta h2 { line-height: 1.04; }
 /* Más aire para los descendentes (g) del degradado */
 .dx-head .grad-text, .dx-section-head .grad-text, .dx-cta .grad-text { padding-bottom: .2em; margin-bottom: -.2em; }
+
+/* Planes */
+.dx-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+.dx-plans > * { display: flex; }
+@media (max-width: 900px) { .dx-plans { grid-template-columns: 1fr; } }
+.dx-plan { padding: 44px 40px; width: 100%; display: flex; flex-direction: column; gap: 18px; position: relative; }
+.dx-plan.is-featured { border-color: rgba(228,114,4,.45); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 0 1px rgba(228,114,4,.15), 0 24px 64px rgba(208,10,95,.18); }
+.dx-plan-tag {
+  align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: 999px; background: var(--grad); color: #fff;
+}
+.dx-plan h3 { font-size: clamp(26px, 2.6vw, 34px); line-height: 1.05; }
+.dx-plan-for { font-size: 16px; }
+.dx-plan-price { display: flex; align-items: baseline; gap: 10px; padding: 10px 0 18px; border-bottom: 1px solid var(--line); }
+.dx-plan-amount { font-family: var(--font-h); font-weight: 800; font-size: clamp(40px, 4.4vw, 56px); letter-spacing: -.03em; line-height: 1; color: var(--ink); }
+.dx-plan-iva { font-size: 15px; color: var(--ink-3); font-weight: 600; }
+.dx-plan-list { list-style: none; display: grid; gap: 12px; }
+.dx-plan-list li { display: grid; grid-template-columns: 20px 1fr; gap: 12px; font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+.dx-plan-list svg { width: 18px; height: 18px; color: var(--orange); margin-top: 2px; }
+.dx-plan-cta { margin-top: auto; padding-top: 12px; }
+.dx-plan-cta .btn { white-space: normal; text-align: left; }
+@media (max-width: 768px) { .dx-plan { padding: 32px 24px; } }
+.dx-cta .row .btn { white-space: normal; }
