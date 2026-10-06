@@ -4,6 +4,24 @@
 
 export const articles = [
   {
+    slug: "cuanto-cuesta-una-pagina-web-chile",
+    title: "¿Cuánto cuesta una página web en Chile? Precios 2026 y qué estás pagando realmente",
+    excerpt: "Desde $150.000 hasta más de $5.000.000. Por qué hay precios tan distintos, qué incluye cada rango y los costos que no aparecen en la cotización.",
+    category: "Diseño Web",
+    date: "2026-10-06",
+    readTime: "8 min",
+    image: "/assets/blog/cuanto-cuesta-pagina-web-chile.jpg"
+  },
+  {
+    slug: "como-cotizar-una-pagina-web",
+    title: "Cómo cotizar una página web: 10 preguntas antes de contratar (y la que casi nadie hace)",
+    excerpt: "Qué preguntar a una agencia o freelance antes de firmar, señales de alerta y por qué el dominio y el hosting deben quedar a tu nombre.",
+    category: "Diseño Web",
+    date: "2026-10-06",
+    readTime: "7 min",
+    image: "/assets/blog/como-cotizar-pagina-web-chile.jpg"
+  },
+  {
     slug: "publicidad-pagada-vs-contenido-organico",
     title: "¿Publicidad pagada o contenido orgánico? Por qué pagas más ads por menos resultado",
     excerpt: "La publicidad cuesta cada vez más y el contenido orgánico es un activo que compone. Cuándo conviene cada uno para una empresa en Chile.",

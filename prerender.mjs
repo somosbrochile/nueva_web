@@ -31,6 +31,8 @@ const ROUTES = [
   'blog/index.html',
   'blog/por-que-tu-empresa-necesita-branding.html',
   'blog/publicidad-pagada-vs-contenido-organico.html',
+  'blog/cuanto-cuesta-una-pagina-web-chile.html',
+  'blog/como-cotizar-una-pagina-web.html',
 ]
 
 const MIME = {

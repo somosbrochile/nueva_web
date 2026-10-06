@@ -15,6 +15,8 @@ export default defineConfig({
         diagnostico: 'diagnostico-digital.html',
         blogBranding: 'blog/por-que-tu-empresa-necesita-branding.html',
         blogAds: 'blog/publicidad-pagada-vs-contenido-organico.html',
+        blogPrecioWeb: 'blog/cuanto-cuesta-una-pagina-web-chile.html',
+        blogCotizarWeb: 'blog/como-cotizar-una-pagina-web.html',
       }
     }
   }
