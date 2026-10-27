@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { CustomCursor, Magnetic, FadeUp, Nav, Footer, PageTransition } from './site.jsx'
 import './styles.css'
 
-const FORMSPREE_URL = "https://formspree.io/f/mjgzzqnk";
-
 function ContactForm() {
   const [status, setStatus] = React.useState("idle"); // idle | sending | success | error
   const formRef = React.useRef(null);
@@ -14,9 +12,9 @@ function ContactForm() {
     setStatus("sending");
     const data = Object.fromEntries(new FormData(e.target));
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (res.ok) {
