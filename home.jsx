@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { CustomCursor, Magnetic, FadeUp, RevealHeadline, StatNumber, Nav, Footer, PageTransition, Marquee } from './site.jsx'
 import './styles.css'
 
-const FORMSPREE_URL = "https://formspree.io/f/mjgzzqnk";
 
 // Detecta Safari: tiene "Safari" en el UA pero NO "Chrome" (Chrome incluye ambas palabras)
 const IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -661,9 +660,9 @@ function HomeContactForm() {
     setStatus("sending");
     const data = Object.fromEntries(new FormData(e.target));
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (res.ok) {
