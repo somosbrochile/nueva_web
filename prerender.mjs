@@ -33,6 +33,8 @@ const ROUTES = [
   'blog/publicidad-pagada-vs-contenido-organico.html',
   'blog/cuanto-cuesta-una-pagina-web-chile.html',
   'blog/como-cotizar-una-pagina-web.html',
+  'blog/por-que-mi-pagina-web-no-aparece-en-google.html',
+  'blog/como-aparecer-en-google-maps-chile.html',
 ]
 
 const MIME = {

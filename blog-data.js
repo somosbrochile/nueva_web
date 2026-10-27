@@ -4,6 +4,22 @@
 
 export const articles = [
   {
+    slug: "como-aparecer-en-google-maps-chile",
+    title: "Cómo aparecer en Google Maps en Chile (y por qué tu competencia sale antes que tú)",
+    excerpt: "Crear tu ficha es gratis; aparecer primero, no. Cómo decide Google qué negocios mostrar en el mapa, qué te ayuda a subir y los errores que te dejan fuera.",
+    category: "SEO",
+    date: "2026-10-27",
+    readTime: "7 min"
+  },
+  {
+    slug: "por-que-mi-pagina-web-no-aparece-en-google",
+    title: "¿Por qué mi página web no aparece en Google? 9 causas que casi nadie revisa",
+    excerpt: "Tu sitio no aparece en Google por causas concretas: técnicas, de contenido o de competencia. Las 9 más comunes y por qué arreglar solo una casi nunca funciona.",
+    category: "SEO",
+    date: "2026-10-27",
+    readTime: "7 min"
+  },
+  {
     slug: "cuanto-cuesta-una-pagina-web-chile",
     title: "¿Cuánto cuesta una página web en Chile? Precios 2026 y qué estás pagando realmente",
     excerpt: "Desde $150.000 hasta más de $5.000.000. Por qué hay precios tan distintos, qué incluye cada rango y los costos que no aparecen en la cotización.",

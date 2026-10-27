@@ -17,6 +17,8 @@ export default defineConfig({
         blogAds: 'blog/publicidad-pagada-vs-contenido-organico.html',
         blogPrecioWeb: 'blog/cuanto-cuesta-una-pagina-web-chile.html',
         blogCotizarWeb: 'blog/como-cotizar-una-pagina-web.html',
+        blogNoApareceGoogle: 'blog/por-que-mi-pagina-web-no-aparece-en-google.html',
+        blogGoogleMaps: 'blog/como-aparecer-en-google-maps-chile.html',
       }
     }
   }
