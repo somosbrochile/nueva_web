@@ -110,11 +110,11 @@ function Contact() {
             <FadeUp delay={0.1}>
               <div style={{display:"flex",flexDirection:"column",gap:24}}>
                 <Magnetic strength={0.2}>
-                  <a className="wa-btn" href="https://wa.me/56900000000" target="_blank" rel="noreferrer" style={{width:"100%",boxSizing:"border-box"}}>
-                    <svg className="wa-icon" viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3 9 3 16c0 2.4.7 4.7 2 6.7L3 29l6.5-2C11.4 28 13.7 28.7 16 28.7c7 0 13-6 13-13S23 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.8-1.7l-.4-.2-3.9 1.2 1.2-3.8-.3-.4C5.5 19.8 5 17.9 5 16c0-6 5-11 11-11s11 5 11 11-5 11-11 11zm6-8.2c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.8.2s-.9 1.1-1.1 1.3c-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.7.1-.1.3-.4.4-.6.1-.2.2-.3.3-.5.1-.2.1-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7-.1-.2-.3-.3-.6-.5z"/></svg>
+                  <a className="wa-btn" href="#form" style={{width:"100%",boxSizing:"border-box"}} onClick={e=>{e.preventDefault();document.querySelector('.contact-form')?.scrollIntoView({behavior:'smooth'})}}>
+                    <svg className="wa-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                     <div style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:2}}>
-                      <span style={{fontWeight:700}}>Hablar por WhatsApp</span>
-                      <span style={{fontSize:12,opacity:.7,fontWeight:500}}>Respuesta &lt; 24h</span>
+                      <span style={{fontWeight:700}}>Escríbenos por el formulario</span>
+                      <span style={{fontSize:12,opacity:.7,fontWeight:500}}>Respondemos en menos de 24h</span>
                     </div>
                   </a>
                 </Magnetic>
