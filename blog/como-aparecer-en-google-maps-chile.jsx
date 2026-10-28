@@ -9,9 +9,8 @@ const meta = {
   dateISO: '2026-10-27',
   dateLabel: '27 de octubre, 2026',
   readTime: '7 min',
-  // Portada: sube la foto a public/assets/blog/ y descomenta:
-  // heroImage: '/assets/blog/aparecer-en-google-maps-santiago.jpg',
-  // heroAlt: 'Persona buscando un negocio cercano en Google Maps desde su celular en una calle de Santiago',
+  heroImage: '/assets/blog/aparecer-en-google-maps-santiago.jpg',
+  heroAlt: 'Ilustración de una ciudad con un pin de ubicación destacado, cómo aparecer en Google Maps en Santiago de Chile',
   ctaTitle: '¿Tu competencia aparece en Google Maps y tú no?',
   ctaText: 'Revisamos tu perfil de empresa, tus reseñas y tu sitio, y te decimos qué te está dejando fuera del mapa. SEO local para pymes y profesionales en Santiago y todo Chile.',
 };

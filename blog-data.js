@@ -9,7 +9,8 @@ export const articles = [
     excerpt: "Crear tu ficha es gratis; aparecer primero, no. Cómo decide Google qué negocios mostrar en el mapa, qué te ayuda a subir y los errores que te dejan fuera.",
     category: "SEO",
     date: "2026-10-27",
-    readTime: "7 min"
+    readTime: "7 min",
+    image: "/assets/blog/aparecer-en-google-maps-santiago.jpg"
   },
   {
     slug: "por-que-mi-pagina-web-no-aparece-en-google",
@@ -17,7 +18,8 @@ export const articles = [
     excerpt: "Tu sitio no aparece en Google por causas concretas: técnicas, de contenido o de competencia. Las 9 más comunes y por qué arreglar solo una casi nunca funciona.",
     category: "SEO",
     date: "2026-10-27",
-    readTime: "7 min"
+    readTime: "7 min",
+    image: "/assets/blog/pagina-web-no-aparece-en-google-chile.jpg"
   },
   {
     slug: "cuanto-cuesta-una-pagina-web-chile",

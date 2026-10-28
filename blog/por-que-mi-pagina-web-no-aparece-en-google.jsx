@@ -9,9 +9,8 @@ const meta = {
   dateISO: '2026-10-27',
   dateLabel: '27 de octubre, 2026',
   readTime: '7 min',
-  // Portada: sube la foto a public/assets/blog/ y descomenta:
-  // heroImage: '/assets/blog/pagina-web-no-aparece-en-google-chile.jpg',
-  // heroAlt: 'Dueña de una pyme en Santiago revisando en su notebook por qué su página web no aparece en Google',
+  heroImage: '/assets/blog/pagina-web-no-aparece-en-google-chile.jpg',
+  heroAlt: 'Dueña de una tienda online de ropa preocupada frente a su notebook porque su página web no aparece en Google',
   ctaTitle: '¿Tu sitio no aparece en Google? Te decimos por qué.',
   ctaText: 'Revisamos tu sitio, encontramos qué lo está frenando y te entregamos un plan priorizado. Diagnóstico digital para pymes y empresas en Santiago y todo Chile.',
 };
