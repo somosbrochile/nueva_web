@@ -32,17 +32,6 @@
   ],
   "redirects": [
     {
-      "source": "/:path(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.somosbro.cl"
-        }
-      ],
-      "destination": "https://somosbro.cl/:path",
-      "permanent": true
-    },
-    {
       "source": "/about.html",
       "destination": "/nosotros",
       "permanent": true
