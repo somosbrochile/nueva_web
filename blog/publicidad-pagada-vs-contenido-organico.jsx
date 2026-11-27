@@ -165,6 +165,13 @@ function Post() {
         autoridad— que sigue trabajando meses después, a diferencia del anuncio, que desaparece
         cuando dejas de pagar.
       </p>
+      <div className="related-posts">
+        <h3>También puede interesarte</h3>
+        <ul>
+          <li><a href="/blog/por-que-tu-empresa-necesita-branding">Branding para empresas: por qué necesitas más que un logo</a></li>
+          <li><a href="/blog/por-que-mi-pagina-web-no-aparece-en-google">Mi página web no aparece en Google: causas y soluciones reales</a></li>
+        </ul>
+      </div>
     </Article>
   );
 }

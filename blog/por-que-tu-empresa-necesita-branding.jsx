@@ -131,6 +131,13 @@ function Post() {
         marca completa con naming, mensajes y sistema de diseño. En Somos Bro trabajamos por
         proyecto y entregamos una propuesta a medida tras una primera conversación sin costo.
       </p>
+      <div className="related-posts">
+        <h3>También puede interesarte</h3>
+        <ul>
+          <li><a href="/blog/como-cotizar-una-pagina-web">Cotizar una página web en Chile: qué preguntar (y qué evitar)</a></li>
+          <li><a href="/blog/publicidad-pagada-vs-contenido-organico">Publicidad pagada vs orgánico: qué conviene según tu etapa</a></li>
+        </ul>
+      </div>
     </Article>
   );
 }
