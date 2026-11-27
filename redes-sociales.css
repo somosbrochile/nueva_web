@@ -1,0 +1,45 @@
+/* ============================================================
+   Redes sociales para empresas — estilos propios de la página.
+   Extiende las clases dx- de diagnostico.css.
+   ============================================================ */
+
+/* Servicios: 6 tarjetas en 3 columnas */
+.rs-services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) { .rs-services { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px)  { .rs-services { grid-template-columns: 1fr; } }
+
+.rs-service-card {
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rs-service-card h3 {
+  font-size: 20px;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.rs-service-card p {
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* Planes: 3 columnas en desktop */
+.rs-plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+.rs-plans > * { display: flex; }
+@media (max-width: 1100px) { .rs-plans { grid-template-columns: 1fr; } }
+
+/* Precio más compacto para texto tipo "Desde $X.XXX.XXX" */
+.rs-plan-amount {
+  font-size: clamp(24px, 2.4vw, 36px) !important;
+}
