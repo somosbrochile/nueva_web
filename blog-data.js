@@ -4,6 +4,15 @@
 
 export const articles = [
   {
+    slug: "marca-personal-ceo-chile",
+    title: "Marca personal para CEO: cómo los líderes en Chile construyen autoridad digital",
+    excerpt: "Por qué el CEO visible vende más sin salir a vender. Los 5 pilares, LinkedIn como plataforma principal y los errores que frenan a los directivos en Chile.",
+    category: "Marca Personal",
+    date: "2026-11-27",
+    readTime: "8 min",
+    image: "/assets/blog/marca-personal-ceo-chile-somos-bro.jpg"
+  },
+  {
     slug: "como-aparecer-en-google-maps-chile",
     title: "Cómo aparecer en Google Maps en Chile (y por qué tu competencia sale antes que tú)",
     excerpt: "Crear tu ficha es gratis; aparecer primero, no. Cómo decide Google qué negocios mostrar en el mapa, qué te ayuda a subir y los errores que te dejan fuera.",
