@@ -19,6 +19,8 @@ export default defineConfig({
         blogCotizarWeb: 'blog/como-cotizar-una-pagina-web.html',
         blogNoApareceGoogle: 'blog/por-que-mi-pagina-web-no-aparece-en-google.html',
         blogGoogleMaps: 'blog/como-aparecer-en-google-maps-chile.html',
+        blogMarcaPersonalCeo: 'blog/marca-personal-ceo-chile.html',
+        redesSociales: 'redes-sociales.html',
       }
     }
   }

@@ -26,6 +26,10 @@
       "destination": "/diagnostico-digital.html"
     },
     {
+      "source": "/servicios/redes-sociales-para-empresas",
+      "destination": "/redes-sociales.html"
+    },
+    {
       "source": "/blog/:slug",
       "destination": "/blog/:slug.html"
     }
