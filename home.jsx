@@ -727,6 +727,66 @@ function HomeContactForm() {
   );
 }
 
+const BLOG_POSTS = [
+  {
+    href: "/blog/como-cotizar-una-pagina-web",
+    category: "Diseño Web",
+    title: "Cotizar una página web en Chile: qué preguntar (y qué evitar)",
+    excerpt: "Señales de alerta, preguntas clave y por qué el dominio debe quedar a tu nombre desde el primer día.",
+    readTime: "6 min",
+  },
+  {
+    href: "/blog/por-que-mi-pagina-web-no-aparece-en-google",
+    category: "SEO",
+    title: "Mi página web no aparece en Google: causas y soluciones reales",
+    excerpt: "Las causas más frecuentes en Chile y qué revisar primero para que Google empiece a indexarte.",
+    readTime: "7 min",
+  },
+  {
+    href: "/blog/publicidad-pagada-vs-contenido-organico",
+    category: "Marketing Digital",
+    title: "Publicidad pagada vs orgánico en Chile: qué conviene según tu etapa",
+    excerpt: "Los ads funcionan rápido pero se acaban. El contenido orgánico rinde por años. Te explicamos cuándo usar cada uno.",
+    readTime: "8 min",
+  },
+];
+
+function BlogSection() {
+  return (
+    <section id="blog">
+      <div className="container">
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:56,gap:24,flexWrap:"wrap"}}>
+          <div>
+            <FadeUp><span className="eyebrow">Del blog</span></FadeUp>
+            <FadeUp delay={0.05}><h2 style={{marginTop:16}}>Lo que necesitas saber <span className="grad-text">antes de invertir.</span></h2></FadeUp>
+          </div>
+          <FadeUp delay={0.1}>
+            <Magnetic><a className="btn btn-ghost" href="/blog">Ver todo<svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg></a></Magnetic>
+          </FadeUp>
+        </div>
+        <div className="blog-preview-grid">
+          {BLOG_POSTS.map((post, i) => (
+            <FadeUp key={post.href} delay={0.08 + i * 0.08}>
+              <a href={post.href} className="blog-preview-card glass">
+                <div className="blog-preview-top">
+                  <span className="tag">{post.category}</span>
+                  <span className="blog-preview-time">{post.readTime}</span>
+                </div>
+                <h3 className="blog-preview-title">{post.title}</h3>
+                <p className="blog-preview-excerpt">{post.excerpt}</p>
+                <div className="blog-preview-cta">
+                  Leer artículo
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </div>
+              </a>
+            </FadeUp>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Home() {
   // Touch events para móvil — service-cards y portfolio-cards
   useEffect(() => {
@@ -873,6 +933,9 @@ function Home() {
       <GaleriaSection />
 
       <SocialSection />
+
+      {/* BLOG TEASER */}
+      <BlogSection />
 
       {/* CONTACT TEASER */}
       <section>
