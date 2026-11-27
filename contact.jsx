@@ -125,10 +125,6 @@ function Contact() {
                     <a href="mailto:contacto@somosbro.cl" className="info-val">contacto@somosbro.cl</a>
                   </div>
                   <div className="info-item">
-                    <span className="info-label">Teléfono</span>
-                    <span className="info-val">+56 9 0000 0000</span>
-                  </div>
-                  <div className="info-item">
                     <span className="info-label">Estudio</span>
                     <span className="info-val">Providencia, Santiago<br/>Chile · GMT-3</span>
                   </div>
@@ -138,13 +134,6 @@ function Contact() {
                   </div>
                 </div>
 
-                <div className="glass" style={{padding:24,display:"flex",gap:16,alignItems:"center"}}>
-                  <div style={{width:8,height:8,borderRadius:"50%",background:"var(--teal)",boxShadow:"0 0 12px var(--teal)"}}/>
-                  <div>
-                    <div style={{fontFamily:"var(--font-h)",fontWeight:700,fontSize:16}}>Disponibles este mes</div>
-                    <div style={{fontSize:13,color:"var(--ink-3)",marginTop:2}}>Quedan 2 cupos para mayo</div>
-                  </div>
-                </div>
               </div>
             </FadeUp>
           </div>
